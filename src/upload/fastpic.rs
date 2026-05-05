@@ -26,29 +26,18 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String>
 
     let body = response_text(resp, "fastpic").await?;
 
-    let url = extract_tag(&body, "imagepath");
-    if url.is_empty() {
+    extract_tag(&body, "imagepath").ok_or_else(|| {
         debug!("Response text:\n{body}");
-        anyhow::bail!("image link not found in fastpic response");
-    }
-
-    Ok(url)
+        anyhow::anyhow!("image link not found in fastpic response")
+    })
 }
 
-/// Extract text content of an XML tag. Returns empty string if not found.
-fn extract_tag(body: &str, tag: &str) -> String {
-    let open = format!("<{tag}>");
-    let close = format!("</{tag}>");
-
-    let Some(start) = body.find(&open) else {
-        return String::new();
-    };
-    let start = start + open.len();
-    let Some(end) = body[start..].find(&close) else {
-        return String::new();
-    };
-
-    body[start..start + end].trim().to_owned()
+/// Extract trimmed text content of an XML tag.
+fn extract_tag(body: &str, tag: &str) -> Option<String> {
+    let (_, rest) = body.split_once(&format!("<{tag}>"))?;
+    let (inner, _) = rest.split_once(&format!("</{tag}>"))?;
+    let trimmed = inner.trim();
+    (!trimmed.is_empty()).then(|| trimmed.to_owned())
 }
 
 #[cfg(test)]

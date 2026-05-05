@@ -16,7 +16,7 @@ dotenvy = { version = "0.15" }
 # Async & HTTP
 futures = { version = "0.3", default-features = false, features = ["alloc"] }
 reqwest = { version = "0.13", default-features = false, features = ["rustls", "multipart", "cookies", "form"] }
-tokio   = { version = "1.51", features = ["fs", "macros", "rt-multi-thread"] }
+tokio   = { version = "1.52", features = ["fs", "macros", "rt-multi-thread"] }
 
 # Serialization
 base64     = { version = "0.22" }
@@ -29,7 +29,7 @@ image   = { version = "0.25", default-features = false, features = ["png", "jpeg
 
 # System integration
 arboard     = { version = "3.6", default-features = false }
-notify-rust = { version = "4.13" }
+notify-rust = { version = "4.17" }
 
 # Error handling & logging
 anyhow             = { version = "1.0" }

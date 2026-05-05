@@ -31,20 +31,14 @@ pub fn format_links(links: &[LinkPair], fmt: Format) -> String {
 }
 
 fn format_link(img: &str, thumb: Option<&str>, fmt: Format) -> String {
-    match fmt {
-        Format::Plain => img.to_owned(),
-        Format::Bbcode => match thumb {
-            Some(t) => format!("[url={img}][img]{t}[/img][/url]"),
-            None => format!("[img]{img}[/img]"),
-        },
-        Format::Html => match thumb {
-            Some(t) => format!("<a href=\"{img}\"><img src=\"{t}\" alt=\"thumb\"></a>"),
-            None => format!("<img src=\"{img}\" alt=\"image\">"),
-        },
-        Format::Markdown => match thumb {
-            Some(t) => format!("[![thumb]({t})]({img})"),
-            None => format!("![image]({img})"),
-        },
+    match (fmt, thumb) {
+        (Format::Plain, _) => img.to_owned(),
+        (Format::Bbcode, None) => format!("[img]{img}[/img]"),
+        (Format::Bbcode, Some(t)) => format!("[url={img}][img]{t}[/img][/url]"),
+        (Format::Html, None) => format!("<img src=\"{img}\" alt=\"image\">"),
+        (Format::Html, Some(t)) => format!("<a href=\"{img}\"><img src=\"{t}\" alt=\"thumb\"></a>"),
+        (Format::Markdown, None) => format!("![image]({img})"),
+        (Format::Markdown, Some(t)) => format!("[![thumb]({t})]({img})"),
     }
 }
 
