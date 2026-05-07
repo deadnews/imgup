@@ -20,7 +20,7 @@ use crate::format::{Format, LinkPair, format_links};
 use crate::upload::Hosting;
 
 pub(crate) const USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
-pub(crate) const TIMEOUT: Duration = Duration::from_secs(120);
+pub(crate) const TIMEOUT: Duration = Duration::from_mins(2);
 
 #[tokio::main]
 async fn main() -> ExitCode {
@@ -70,16 +70,15 @@ async fn upload_single(
         .ok()?;
     info!("uploaded \"{}\" -> {img_url}", path.display());
 
-    let thumb_url = match thumb_data {
-        Some(td) => Some(
+    let thumb_url = if let Some(td) = thumb_data {
+        Some(
             upload::upload(client, hosting, td)
                 .await
-                .inspect_err(|e| {
-                    error!("thumbnail upload failed for {}: {e:#}", path.display());
-                })
+                .inspect_err(|e| error!("thumbnail upload failed for {}: {e:#}", path.display()))
                 .ok()?,
-        ),
-        None => None,
+        )
+    } else {
+        None
     };
 
     Some((img_url, thumb_url))

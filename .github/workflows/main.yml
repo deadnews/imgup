@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Run prek
-        uses: j178/prek-action@53276d8b0d10f8b6672aa85b4588c6921d0370cc # v2.0.1
+        uses: j178/prek-action@6ad80277337ad479fe43bd70701c3f7f8aa74db3 # v2.0.3
 
   lint:
     name: Lint code
@@ -47,7 +47,7 @@ jobs:
       - name: Rust Cache
         uses: swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
 
-      - uses: taiki-e/install-action@7a562dfa955aa2e4d5b0fd6ebd57ff9715c07b0b # v2.73.0
+      - uses: taiki-e/install-action@cca35edeb1d01366c2843b68fc3ca441446d73d3 # v2.77.1
         with:
           tool: nextest,cargo-llvm-cov
 
@@ -110,14 +110,14 @@ jobs:
         run: sed "s|^version.*|version = '${GITHUB_REF_NAME#v}'|" Cargo.toml > t && mv t Cargo.toml
 
       - name: Build wheel
-        uses: pyo3/maturin-action@04ac600d27cdf7a9a280dadf7147097c42b757ad # v1.50.1
+        uses: pyo3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b # v1.51.0
         with:
           command: build
           args: --release --compatibility pypi
           target: ${{ matrix.target }}
           manylinux: ${{ matrix.manylinux || '' }}
 
-      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: wheel-${{ matrix.os }}-${{ matrix.target }}-${{ matrix.manylinux || 'native' }}
           path: target/wheels/
@@ -137,7 +137,7 @@ jobs:
           merge-multiple: true
           path: dist/
 
-      - uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
+      - uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # v1.14.0
         with:
           packages-dir: dist
 
@@ -191,7 +191,7 @@ jobs:
         run: sed "s|^version.*|version = '${GITHUB_REF_NAME#v}'|" Cargo.toml > t && mv t Cargo.toml
 
       - name: Build and upload binary
-        uses: taiki-e/upload-rust-binary-action@10c1cf6a3da113ad4e60018e386570529aa5f1d3 # v1.30.0
+        uses: taiki-e/upload-rust-binary-action@f0d45ae91ee7b8ee928de7a9d04d893a08bcbec6 # v1.30.2
         with:
           bin: imgup
           target: ${{ matrix.target }}
@@ -214,7 +214,7 @@ jobs:
           sed "s|^pkgver=.*$|pkgver=\"${pkgver}\"|" -i PKGBUILD
 
       - name: Deploy PKGBUILD to the AUR
-        uses: ksxgithub/github-actions-deploy-aur@abe8ac26b51011c88be58c8809fd2ac674068ea5 # v4.1.2
+        uses: ksxgithub/github-actions-deploy-aur@da03e160361ce01bf087e790b6ffd196d7dccff7 # v4.1.3
         with:
           pkgname: ${{ github.event.repository.name }}-bin
           pkgbuild: ./PKGBUILD

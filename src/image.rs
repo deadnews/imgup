@@ -109,7 +109,7 @@ fn draw_text(canvas: &mut RgbImage, font: &FdFont, x: u32, y: u32, text: &str) {
                     let bg = canvas.get_pixel(ux, uy).0;
                     let a = f32::from(alpha) / 255.0;
                     let blend = |c: u8| (f32::from(c) * (1.0 - a)) as u8;
-                    canvas.put_pixel(ux, uy, Rgb([blend(bg[0]), blend(bg[1]), blend(bg[2])]));
+                    canvas.put_pixel(ux, uy, Rgb(bg.map(blend)));
                 }
             }
         }

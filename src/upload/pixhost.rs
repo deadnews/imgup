@@ -30,14 +30,10 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String>
 
     let resp: Response = parse_json(resp, "pixhost").await?;
 
-    // Try to extract direct image link from the show page
-    let show_url = &resp.show_url;
-    if let Ok(direct) = extract_direct_link(client, show_url).await {
-        return Ok(direct);
-    }
-
-    // Fall back to show_url if direct link extraction fails
-    Ok(show_url.clone())
+    Ok(extract_direct_link(client, &resp.show_url)
+        .await
+        .inspect_err(|e| debug!("pixhost direct link extraction failed: {e:#}"))
+        .unwrap_or(resp.show_url))
 }
 
 /// Fetch the show page and extract the direct image URL.
