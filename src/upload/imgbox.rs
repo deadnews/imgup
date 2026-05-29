@@ -64,11 +64,12 @@ pub async fn upload(_client: &Client, data: Vec<u8>, url: &str) -> Result<String
 
     let resp: UploadResponse = parse_json(resp, "imgbox").await?;
 
-    resp.files
+    let file = resp
+        .files
         .into_iter()
         .next()
-        .context("imgbox returned no files")
-        .map(|f| f.original_url)
+        .context("imgbox returned no files")?;
+    Ok(file.original_url)
 }
 
 async fn fetch_csrf(client: &Client, base_url: &str) -> Result<String> {

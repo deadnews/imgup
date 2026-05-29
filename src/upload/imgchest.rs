@@ -43,12 +43,13 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
 
     let resp: Response = parse_json(resp, "imgchest").await?;
 
-    resp.data
+    let image = resp
+        .data
         .images
         .into_iter()
         .next()
-        .map(|img| img.link)
-        .context("imgchest returned no images")
+        .context("imgchest returned no images")?;
+    Ok(image.link)
 }
 
 #[cfg(test)]

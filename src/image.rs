@@ -44,9 +44,7 @@ pub fn make_thumbnail(data: &[u8], font: &Font) -> Result<Vec<u8>> {
     image::imageops::overlay(&mut canvas, &rgb, 0, 0);
 
     let caption = format!(
-        "{}x{} ({}) [{}]",
-        orig_w,
-        orig_h,
+        "{orig_w}x{orig_h} ({}) [{}]",
         format_name(format),
         human_size(data.len())
     );

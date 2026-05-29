@@ -18,6 +18,7 @@ test-ci: test
 
 update: up up-ci
 up:
+	cargo update --recursive --verbose
 	cargo upgrade --incompatible
 up-ci:
 	prek auto-update --freeze
