@@ -32,7 +32,7 @@ pub struct Args {
     pub notify: bool,
 
     /// Disable copying the result to the clipboard.
-    #[arg(long = "no-clipboard")]
+    #[arg(long)]
     pub no_clipboard: bool,
 
     /// Path to .env file. Overrides default config path.
@@ -40,7 +40,7 @@ pub struct Args {
     pub env_file: Option<PathBuf>,
 
     /// Max concurrent uploads.
-    #[arg(short, long, default_value_t = NonZeroUsize::new(4).expect("nonzero"))]
+    #[arg(short, long, default_value_t = const { NonZeroUsize::new(4).expect("nonzero") })]
     pub jobs: NonZeroUsize,
 
     /// Increase verbosity (-v for info, -vv for debug).

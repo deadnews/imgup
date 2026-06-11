@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, anyhow};
 use base64::Engine as _;
 use reqwest::Client;
 use tracing::debug;
@@ -40,7 +40,7 @@ fn extract_hotlink(xml: &str) -> Result<String> {
         .inspect(|url| debug!("postimages hotlink: {url}"))
         .ok_or_else(|| {
             debug!("Response text:\n{xml}");
-            anyhow::anyhow!("hotlink not found in postimages response")
+            anyhow!("hotlink not found in postimages response")
         })
 }
 

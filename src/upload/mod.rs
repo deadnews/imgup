@@ -52,7 +52,7 @@ pub(crate) async fn response_text(resp: reqwest::Response, provider: &str) -> Re
         .await
         .with_context(|| format!("failed to read {provider} response"))?;
 
-    anyhow::ensure!(status.is_success(), "{provider} returned {status}: {body}");
+    ensure!(status.is_success(), "{provider} returned {status}: {body}");
     Ok(body)
 }
 
@@ -68,9 +68,9 @@ pub enum Hosting {
     Imageban,
     Imagekit,
     Imgbb,
-    Imghippo,
     Imgbox,
     Imgchest,
+    Imghippo,
     Imgur,
     Lensdump,
     Pixeldrain,

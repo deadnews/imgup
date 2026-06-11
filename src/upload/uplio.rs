@@ -1,10 +1,10 @@
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, bail};
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use tracing::debug;
 
 use super::response_text;
-use crate::image::get_image_ext;
+use crate::image::detect_format;
 
 pub const API_URL: &str = "https://upl.io";
 
@@ -12,7 +12,7 @@ pub const API_URL: &str = "https://upl.io";
 ///
 /// Requires API key.
 pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Result<String> {
-    let ext = get_image_ext(&data)?;
+    let ext = detect_format(&data)?;
     let ext_str = ext.extensions_str()[0];
     let filename = format!("img.{ext_str}");
 
@@ -32,7 +32,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
     // Convert "https://upl.io/UID[.ext]" to "https://upl.io/i/UID.ext"
     let Some((host, uid)) = text.rsplit_once('/') else {
         debug!("Response text:\n{text}");
-        anyhow::bail!("unexpected uplio response format");
+        bail!("unexpected uplio response format");
     };
     let uid_base = uid.rsplit_once('.').map_or(uid, |(base, _)| base);
     Ok(format!("{host}/i/{uid_base}.{ext_str}"))

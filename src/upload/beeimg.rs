@@ -4,7 +4,7 @@ use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
 
 use super::parse_json;
-use crate::image::get_image_ext;
+use crate::image::detect_format;
 
 pub const API_URL: &str = "https://beeimg.com/api/upload/file/json/";
 
@@ -22,7 +22,7 @@ struct Files {
 ///
 /// No authentication required.
 pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String> {
-    let ext = get_image_ext(&data)?;
+    let ext = detect_format(&data)?;
     let name = format!("img.{}", ext.extensions_str()[0]);
     let content_type = ext.to_mime_type();
 
