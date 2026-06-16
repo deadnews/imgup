@@ -18,7 +18,7 @@ const FONT_DATA: &[u8] = include_bytes!("fonts/DejaVuSerif.ttf");
 pub struct Font(FdFont);
 
 /// Detect image format from raw bytes.
-pub fn get_image_ext(data: &[u8]) -> Result<ImageFormat> {
+pub fn detect_format(data: &[u8]) -> Result<ImageFormat> {
     image::guess_format(data).context("unable to detect image format")
 }
 
@@ -32,7 +32,7 @@ pub fn get_font() -> Font {
 
 /// Generate a JPEG thumbnail with a text caption showing dimensions, format, and file size.
 pub fn make_thumbnail(data: &[u8], font: &Font) -> Result<Vec<u8>> {
-    let format = get_image_ext(data)?;
+    let format = detect_format(data)?;
     let img = image::load_from_memory(data).context("failed to decode image")?;
     let (orig_w, orig_h) = (img.width(), img.height());
 
@@ -132,15 +132,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_get_image_ext_png() {
+    fn test_detect_format_png() {
         let data = create_test_png();
-        let fmt = get_image_ext(&data).unwrap();
+        let fmt = detect_format(&data).unwrap();
         assert_eq!(fmt, ImageFormat::Png);
     }
 
     #[test]
-    fn test_get_image_ext_invalid() {
-        let result = get_image_ext(b"not an image");
+    fn test_detect_format_invalid() {
+        let result = detect_format(b"not an image");
         assert!(result.is_err());
     }
 
@@ -151,7 +151,7 @@ mod tests {
         let thumb = make_thumbnail(&data, &font).unwrap();
         assert!(!thumb.is_empty());
 
-        let fmt = get_image_ext(&thumb).unwrap();
+        let fmt = detect_format(&thumb).unwrap();
         assert_eq!(fmt, ImageFormat::Jpeg);
     }
 

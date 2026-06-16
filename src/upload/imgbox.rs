@@ -1,11 +1,11 @@
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, bail};
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
 use tracing::debug;
 
 use super::{parse_json, response_text};
-use crate::TIMEOUT;
+use crate::{TIMEOUT, USER_AGENT};
 
 pub const API_URL: &str = "https://imgbox.com";
 
@@ -33,6 +33,7 @@ struct UploadResponse {
 /// A local cookie-aware client maintains the session across the three steps.
 pub async fn upload(_client: &Client, data: Vec<u8>, url: &str) -> Result<String> {
     let client = reqwest::Client::builder()
+        .user_agent(USER_AGENT)
         .cookie_store(true)
         .timeout(TIMEOUT)
         .build()
@@ -96,7 +97,7 @@ fn extract_csrf_token(html: &str) -> Result<String> {
         }
     }
     debug!("HTML:\n{html}");
-    anyhow::bail!("csrf token not found in imgbox page")
+    bail!("csrf token not found in imgbox page")
 }
 
 async fn fetch_token(client: &Client, base_url: &str, csrf_token: &str) -> Result<TokenResponse> {

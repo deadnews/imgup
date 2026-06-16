@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, bail};
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
@@ -61,7 +61,7 @@ async fn extract_direct_link(client: &Client, show_url: &str) -> Result<String> 
     }
 
     debug!("Response text:\n{page}");
-    anyhow::bail!("direct link not found in pixhost show page")
+    bail!("direct link not found in pixhost show page")
 }
 
 #[cfg(test)]

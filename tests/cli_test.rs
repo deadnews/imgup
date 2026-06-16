@@ -41,6 +41,17 @@ fn test_nonexistent_file_fails() {
 }
 
 #[test]
+fn test_missing_env_file_fails() {
+    let output = imgup()
+        .args(["--env-file", "/tmp/nonexistent_env_12345", "dummy.png"])
+        .output()
+        .expect("failed to run");
+    assert!(!output.status.success());
+    let stderr = String::from_utf8_lossy(&output.stderr);
+    assert!(stderr.contains("env file"));
+}
+
+#[test]
 fn test_hosting_values() {
     // Verify invalid hosting value is rejected
     let output = imgup()

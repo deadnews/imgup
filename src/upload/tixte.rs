@@ -4,7 +4,7 @@ use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
 
 use super::parse_json;
-use crate::image::get_image_ext;
+use crate::image::detect_format;
 
 pub const API_URL: &str = "https://api.tixte.com/v1/upload";
 
@@ -22,7 +22,7 @@ struct Data {
 ///
 /// Requires API key.
 pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Result<String> {
-    let ext = get_image_ext(&data)?;
+    let ext = detect_format(&data)?;
     let ext_str = ext.extensions_str()[0];
     let filename = format!("img.{ext_str}");
 

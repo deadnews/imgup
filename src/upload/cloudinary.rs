@@ -4,7 +4,7 @@ use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
 
 use super::parse_json;
-use crate::image::get_image_ext;
+use crate::image::detect_format;
 
 pub const API_URL: &str = "https://api.cloudinary.com/v1_1";
 
@@ -23,7 +23,7 @@ pub async fn upload(
     api_key: &str,
     api_secret: &str,
 ) -> Result<String> {
-    let ext = get_image_ext(&data)?;
+    let ext = detect_format(&data)?;
     let ext_str = ext.extensions_str()[0];
 
     let form = Form::new().part(

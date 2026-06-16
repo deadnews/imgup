@@ -4,7 +4,7 @@ use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
 
 use super::parse_json;
-use crate::image::get_image_ext;
+use crate::image::detect_format;
 
 pub const API_URL: &str = "https://api.gofile.io/servers";
 
@@ -64,7 +64,7 @@ async fn get_server(client: &Client, servers_url: &str) -> Result<String> {
 }
 
 async fn upload_to(client: &Client, data: Vec<u8>, upload_url: &str) -> Result<String> {
-    let ext = get_image_ext(&data)?;
+    let ext = detect_format(&data)?;
     let ext_str = ext.extensions_str()[0];
 
     let form = Form::new().part(

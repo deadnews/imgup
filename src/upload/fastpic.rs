@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, bail};
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use tracing::debug;
@@ -26,10 +26,15 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String>
 
     let body = response_text(resp, "fastpic").await?;
 
-    extract_tag(&body, "imagepath").ok_or_else(|| {
-        debug!("Response text:\n{body}");
-        anyhow::anyhow!("image link not found in fastpic response")
-    })
+    if let Some(link) = extract_tag(&body, "imagepath") {
+        return Ok(link);
+    }
+
+    debug!("Response text:\n{body}");
+    match extract_tag(&body, "error") {
+        Some(e) => bail!("fastpic error: {e}"),
+        None => bail!("image link not found in fastpic response"),
+    }
 }
 
 /// Extract trimmed text content of an XML tag.
@@ -85,8 +90,9 @@ mod tests {
             .await
             .unwrap_err();
         assert!(
-            err.to_string().contains("image link not found"),
-            "expected image link not found error, got: {err}"
+            err.to_string()
+                .contains("Sorry, uploading are not allowed."),
+            "expected server error message, got: {err}"
         );
     }
 }
