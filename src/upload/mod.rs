@@ -2,6 +2,7 @@ mod beeimg;
 mod catbox;
 mod cloudinary;
 mod fastpic;
+mod filepost;
 mod freeimage;
 mod gofile;
 mod gyazo;
@@ -17,6 +18,7 @@ mod kappa;
 mod lensdump;
 mod pixeldrain;
 mod pixhost;
+mod pixvid;
 mod postimages;
 mod ptpimg;
 mod sxcu;
@@ -64,6 +66,7 @@ pub enum Hosting {
     Catbox,
     Cloudinary,
     Fastpic,
+    Filepost,
     Freeimage,
     Gofile,
     Gyazo,
@@ -79,6 +82,7 @@ pub enum Hosting {
     Lensdump,
     Pixeldrain,
     Pixhost,
+    Pixvid,
     Postimages,
     Ptpimg,
     Sxcu,
@@ -101,6 +105,10 @@ impl std::fmt::Display for Hosting {
 }
 
 /// Dispatch upload to the appropriate provider.
+#[expect(
+    clippy::too_many_lines,
+    reason = "flat provider dispatch grows with hostings"
+)]
 pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<String> {
     let url = match hosting {
         Hosting::Beeimg => beeimg::upload(client, data, beeimg::API_URL).await,
@@ -115,6 +123,10 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
             let api_secret = get_env("CLOUDINARY_API_SECRET")?;
             let url = format!("{}/{cloud_name}/image/upload", cloudinary::API_URL);
             cloudinary::upload(client, data, &url, &api_key, &api_secret).await
+        }
+        Hosting::Filepost => {
+            let key = get_env("FILEPOST_KEY")?;
+            filepost::upload(client, data, filepost::API_URL, &key).await
         }
         Hosting::Freeimage => {
             let key = get_env("FREEIMAGE_KEY")?;
@@ -162,6 +174,10 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
         Hosting::Pixeldrain => {
             let key = get_env("PIXELDRAIN_KEY")?;
             pixeldrain::upload(client, data, pixeldrain::API_URL, &key).await
+        }
+        Hosting::Pixvid => {
+            let key = get_env("PIXVID_KEY")?;
+            pixvid::upload(client, data, pixvid::API_URL, &key).await
         }
         Hosting::Postimages => {
             let key = get_env("POSTIMAGES_KEY")?;

@@ -29,6 +29,7 @@ yay -S imgup-bin
 | [catbox](https://catbox.moe/)         |      -       | `https://files.catbox.moe/{id}`                            |
 | [cloudinary](https://cloudinary.com/) |      +       | `https://res.cloudinary.com/{cloud}/image/upload/{id}.png` |
 | [fastpic](https://fastpic.org/)       |      -       | `https://i120.fastpic.org/big/2022/0730/d9/{id}.png`       |
+| [filepost](https://filepost.dev/)     |      +       | `https://cdn.filepost.dev/file/.../{id}.png`               |
 | [freeimage](https://freeimage.host/)  |      +       | `https://iili.io/{id}.png`                                 |
 | [gofile](https://gofile.io/)          |      -       | `https://gofile.io/d/{id}`                                 |
 | [gyazo](https://gyazo.com/)           |      +       | `https://i.gyazo.com/{id}.png`                             |
@@ -44,6 +45,7 @@ yay -S imgup-bin
 | [lensdump](https://lensdump.com/)     |      +       | `https://i.lensdump.com/i/{id}.png`                        |
 | [pixeldrain](https://pixeldrain.com/) |      +       | `https://pixeldrain.com/api/file/{id}`                     |
 | [pixhost](https://pixhost.to/)        |      -       | `https://img75.pixhost.to/images/69/{id}_img.png`          |
+| [pixvid](https://pixvid.org/)         |      +       | `https://pixvid.org/images/2022/07/30/{id}.png`            |
 | [postimages](https://postimages.org/) |      +       | `https://i.postimg.cc/{id}/img.png`                        |
 | [ptpimg](https://ptpimg.me/)          |      +       | `https://ptpimg.me/{id}.png`                               |
 | [sxcu](https://sxcu.net/)             |      -       | `https://sxcu.net/{id}.png`                                |
@@ -83,6 +85,7 @@ Options:
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
+FILEPOST_KEY=
 FREEIMAGE_KEY=
 GYAZO_TOKEN=
 IMAGEBAN_TOKEN=
@@ -94,6 +97,7 @@ IMGLINK_KEY=
 IMGUR_CLIENT_ID=
 LENSDUMP_KEY=
 PIXELDRAIN_KEY=
+PIXVID_KEY=
 POSTIMAGES_KEY=
 PTPIMG_KEY=
 THUMBSNAP_KEY=
