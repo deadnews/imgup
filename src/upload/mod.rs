@@ -11,6 +11,7 @@ mod imgbb;
 mod imgbox;
 mod imgchest;
 mod imghippo;
+mod imglink;
 mod imgur;
 mod lensdump;
 mod pixeldrain;
@@ -71,6 +72,7 @@ pub enum Hosting {
     Imgbox,
     Imgchest,
     Imghippo,
+    Imglink,
     Imgur,
     Lensdump,
     Pixeldrain,
@@ -135,6 +137,10 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
         Hosting::Imghippo => {
             let key = get_env("IMGHIPPO_KEY")?;
             imghippo::upload(client, data, imghippo::API_URL, &key).await
+        }
+        Hosting::Imglink => {
+            let key = get_env("IMGLINK_KEY")?;
+            imglink::upload(client, data, imglink::API_URL, &key).await
         }
         Hosting::Imgbox => imgbox::upload(client, data, imgbox::API_URL).await,
         Hosting::Imgchest => {

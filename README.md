@@ -38,6 +38,7 @@ yay -S imgup-bin
 | [imghippo](https://imghippo.com/)     |      +       | `https://i.imghippo.com/files/{id}.png`                    |
 | [imgbox](https://imgbox.com/)         |      -       | `https://images2.imgbox.com/52/8c/{id}_o.png`              |
 | [imgchest](https://imgchest.com/)     |      +       | `https://cdn.imgchest.com/files/{id}.png`                  |
+| [imglink](https://imglink.cc/)        |      +       | `https://imglink.cc/cdn/{id}.png`                          |
 | [imgur](https://imgur.com/)           |      -       | `https://i.imgur.com/{id}.png`                             |
 | [lensdump](https://lensdump.com/)     |      +       | `https://i.lensdump.com/i/{id}.png`                        |
 | [pixeldrain](https://pixeldrain.com/) |      +       | `https://pixeldrain.com/api/file/{id}`                     |
@@ -88,6 +89,7 @@ IMAGEKIT_PRIVATE_KEY=
 IMGBB_KEY=
 IMGHIPPO_KEY=
 IMGCHEST_KEY=
+IMGLINK_KEY=
 IMGUR_CLIENT_ID=
 LENSDUMP_KEY=
 PIXELDRAIN_KEY=
