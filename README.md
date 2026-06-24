@@ -40,6 +40,7 @@ yay -S imgup-bin
 | [imgchest](https://imgchest.com/)     |      +       | `https://cdn.imgchest.com/files/{id}.png`                  |
 | [imglink](https://imglink.cc/)        |      +       | `https://imglink.cc/cdn/{id}.png`                          |
 | [imgur](https://imgur.com/)           |      -       | `https://i.imgur.com/{id}.png`                             |
+| [kappa](https://kappa.lol/)           |      -       | `https://kappa.lol/{id}.png`                               |
 | [lensdump](https://lensdump.com/)     |      +       | `https://i.lensdump.com/i/{id}.png`                        |
 | [pixeldrain](https://pixeldrain.com/) |      +       | `https://pixeldrain.com/api/file/{id}`                     |
 | [pixhost](https://pixhost.to/)        |      -       | `https://img75.pixhost.to/images/69/{id}_img.png`          |

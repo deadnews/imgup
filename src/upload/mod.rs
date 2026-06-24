@@ -13,6 +13,7 @@ mod imgchest;
 mod imghippo;
 mod imglink;
 mod imgur;
+mod kappa;
 mod lensdump;
 mod pixeldrain;
 mod pixhost;
@@ -74,6 +75,7 @@ pub enum Hosting {
     Imghippo,
     Imglink,
     Imgur,
+    Kappa,
     Lensdump,
     Pixeldrain,
     Pixhost,
@@ -104,6 +106,7 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
         Hosting::Beeimg => beeimg::upload(client, data, beeimg::API_URL).await,
         Hosting::Catbox => catbox::upload(client, data, catbox::API_URL).await,
         Hosting::Fastpic => fastpic::upload(client, data, fastpic::API_URL).await,
+        Hosting::Kappa => kappa::upload(client, data, kappa::API_URL).await,
         Hosting::Pixhost => pixhost::upload(client, data, pixhost::API_URL).await,
         Hosting::Sxcu => sxcu::upload(client, data, sxcu::API_URL).await,
         Hosting::Cloudinary => {
