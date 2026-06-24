@@ -1,5 +1,20 @@
 # Changelog
 
+## [4.0.3](https://github.com/deadnews/imgup/compare/v4.0.2...v4.0.3) - 2026-06-24
+
+### Features
+
+- _(hostings)_ add `filepost`, `imglink`, `kappa`, `pixvid` ([#338](https://github.com/deadnews/imgup/issues/338)) - ([05307ff](https://github.com/deadnews/imgup/commit/05307ff68c702eec05eb8bd93966a7e802dc414d))
+
+### Bug fixes
+
+- improve error handling ([#337](https://github.com/deadnews/imgup/issues/337)) - ([ff2770f](https://github.com/deadnews/imgup/commit/ff2770f05fd39be48d3a114ad7b84f45c293795d))
+
+### Refactor
+
+- simplify - ([7dc66bf](https://github.com/deadnews/imgup/commit/7dc66bf657f024b91cc66d766c447db71ff66832))
+- simplify ([#335](https://github.com/deadnews/imgup/issues/335)) - ([94c71cb](https://github.com/deadnews/imgup/commit/94c71cb92099c37e270ab66ad986c976efc8a094))
+
 ## [4.0.2](https://github.com/deadnews/imgup/compare/v4.0.1...v4.0.2) - 2026-04-06
 
 ### Features
