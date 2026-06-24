@@ -23,38 +23,40 @@ yay -S imgup-bin
 
 ## Hostings
 
-| host                                  | key required | return example                                             |
-| :------------------------------------ | :----------: | :--------------------------------------------------------- |
-| [beeimg](https://beeimg.com/)         |      -       | `https://beeimg.com/images/{id}.png`                       |
-| [catbox](https://catbox.moe/)         |      -       | `https://files.catbox.moe/{id}`                            |
-| [cloudinary](https://cloudinary.com/) |      +       | `https://res.cloudinary.com/{cloud}/image/upload/{id}.png` |
-| [fastpic](https://fastpic.org/)       |      -       | `https://i120.fastpic.org/big/2022/0730/d9/{id}.png`       |
-| [filepost](https://filepost.dev/)     |      +       | `https://cdn.filepost.dev/file/.../{id}.png`               |
-| [freeimage](https://freeimage.host/)  |      +       | `https://iili.io/{id}.png`                                 |
-| [gofile](https://gofile.io/)          |      -       | `https://gofile.io/d/{id}`                                 |
-| [gyazo](https://gyazo.com/)           |      +       | `https://i.gyazo.com/{id}.png`                             |
-| [imageban](https://imageban.ru/)      |      +       | `https://i2.imageban.ru/out/2022/07/30/{id}.png`           |
-| [imagekit](https://imagekit.io/)      |      +       | `https://ik.imagekit.io/{id}/img_{id}.png`                 |
-| [imgbb](https://imgbb.com/)           |      +       | `https://i.ibb.co/{id}/image.png`                          |
-| [imghippo](https://imghippo.com/)     |      +       | `https://i.imghippo.com/files/{id}.png`                    |
-| [imgbox](https://imgbox.com/)         |      -       | `https://images2.imgbox.com/52/8c/{id}_o.png`              |
-| [imgchest](https://imgchest.com/)     |      +       | `https://cdn.imgchest.com/files/{id}.png`                  |
-| [imglink](https://imglink.cc/)        |      +       | `https://imglink.cc/cdn/{id}.png`                          |
-| [imgur](https://imgur.com/)           |      -       | `https://i.imgur.com/{id}.png`                             |
-| [kappa](https://kappa.lol/)           |      -       | `https://kappa.lol/{id}.png`                               |
-| [lensdump](https://lensdump.com/)     |      +       | `https://i.lensdump.com/i/{id}.png`                        |
-| [pixeldrain](https://pixeldrain.com/) |      +       | `https://pixeldrain.com/api/file/{id}`                     |
-| [pixhost](https://pixhost.to/)        |      -       | `https://img75.pixhost.to/images/69/{id}_img.png`          |
-| [pixvid](https://pixvid.org/)         |      +       | `https://pixvid.org/images/2022/07/30/{id}.png`            |
-| [postimages](https://postimages.org/) |      +       | `https://i.postimg.cc/{id}/img.png`                        |
-| [ptpimg](https://ptpimg.me/)          |      +       | `https://ptpimg.me/{id}.png`                               |
-| [sxcu](https://sxcu.net/)             |      -       | `https://sxcu.net/{id}.png`                                |
-| [thumbsnap](https://thumbsnap.com/)   |      +       | `https://thumbsnap.com/i/{id}.png`                         |
-| [tixte](https://tixte.com/)           |      +       | `https://{domain}.tixte.co/r/{id}.png`                     |
-| [uplio](https://upl.io/)              |      +       | `https://upl.io/i/{id}.png`                                |
-| [uploadcare](https://uploadcare.com/) |      +       | `https://ucarecdn.com/{id}/img.png`                        |
-| [vgy](https://vgy.me/)                |      +       | `https://i.vgy.me/{id}.png`                                |
-| [zpic](https://zpic.biz/)             |      +       | `https://zpi.cx/b/{id}.png`                                |
+> key: `-` none · `±` optional · `+` required
+
+| host                                  | key | return example                                             |
+| :------------------------------------ | :-: | :--------------------------------------------------------- |
+| [beeimg](https://beeimg.com/)         |  -  | `https://beeimg.com/images/{id}.png`                       |
+| [catbox](https://catbox.moe/)         |  -  | `https://files.catbox.moe/{id}`                            |
+| [fastpic](https://fastpic.org/)       |  -  | `https://i120.fastpic.org/big/2022/0730/d9/{id}.png`       |
+| [gofile](https://gofile.io/)          |  -  | `https://gofile.io/d/{id}`                                 |
+| [imgbox](https://imgbox.com/)         |  -  | `https://images2.imgbox.com/52/8c/{id}_o.png`              |
+| [kappa](https://kappa.lol/)           |  -  | `https://kappa.lol/{id}.png`                               |
+| [pixhost](https://pixhost.to/)        |  -  | `https://img75.pixhost.to/images/69/{id}_img.png`          |
+| [sxcu](https://sxcu.net/)             |  -  | `https://sxcu.net/{id}.png`                                |
+| [imgur](https://imgur.com/)           |  ±  | `https://i.imgur.com/{id}.png`                             |
+| [cloudinary](https://cloudinary.com/) |  +  | `https://res.cloudinary.com/{cloud}/image/upload/{id}.png` |
+| [filepost](https://filepost.dev/)     |  +  | `https://cdn.filepost.dev/file/.../{id}.png`               |
+| [freeimage](https://freeimage.host/)  |  +  | `https://iili.io/{id}.png`                                 |
+| [gyazo](https://gyazo.com/)           |  +  | `https://i.gyazo.com/{id}.png`                             |
+| [imageban](https://imageban.ru/)      |  +  | `https://i2.imageban.ru/out/2022/07/30/{id}.png`           |
+| [imagekit](https://imagekit.io/)      |  +  | `https://ik.imagekit.io/{id}/img_{id}.png`                 |
+| [imgbb](https://imgbb.com/)           |  +  | `https://i.ibb.co/{id}/image.png`                          |
+| [imgchest](https://imgchest.com/)     |  +  | `https://cdn.imgchest.com/files/{id}.png`                  |
+| [imghippo](https://imghippo.com/)     |  +  | `https://i.imghippo.com/files/{id}.png`                    |
+| [imglink](https://imglink.cc/)        |  +  | `https://imglink.cc/cdn/{id}.png`                          |
+| [lensdump](https://lensdump.com/)     |  +  | `https://i.lensdump.com/i/{id}.png`                        |
+| [pixeldrain](https://pixeldrain.com/) |  +  | `https://pixeldrain.com/api/file/{id}`                     |
+| [pixvid](https://pixvid.org/)         |  +  | `https://pixvid.org/images/2022/07/30/{id}.png`            |
+| [postimages](https://postimages.org/) |  +  | `https://i.postimg.cc/{id}/img.png`                        |
+| [ptpimg](https://ptpimg.me/)          |  +  | `https://ptpimg.me/{id}.png`                               |
+| [thumbsnap](https://thumbsnap.com/)   |  +  | `https://thumbsnap.com/i/{id}.png`                         |
+| [tixte](https://tixte.com/)           |  +  | `https://{domain}.tixte.co/r/{id}.png`                     |
+| [uplio](https://upl.io/)              |  +  | `https://upl.io/i/{id}.png`                                |
+| [uploadcare](https://uploadcare.com/) |  +  | `https://ucarecdn.com/{id}/img.png`                        |
+| [vgy](https://vgy.me/)                |  +  | `https://i.vgy.me/{id}.png`                                |
+| [zpic](https://zpic.biz/)             |  +  | `https://zpi.cx/b/{id}.png`                                |
 
 ## Usage
 
@@ -94,7 +96,7 @@ IMGBB_KEY=
 IMGHIPPO_KEY=
 IMGCHEST_KEY=
 IMGLINK_KEY=
-IMGUR_CLIENT_ID=
+IMGUR_CLIENT_ID= # optional
 LENSDUMP_KEY=
 PIXELDRAIN_KEY=
 PIXVID_KEY=

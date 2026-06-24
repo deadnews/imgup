@@ -105,18 +105,47 @@ impl std::fmt::Display for Hosting {
 }
 
 /// Dispatch upload to the appropriate provider.
-#[expect(
-    clippy::too_many_lines,
-    reason = "flat provider dispatch grows with hostings"
-)]
 pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<String> {
+    macro_rules! anon {
+        ($m:ident) => {
+            $m::upload(client, data, $m::API_URL).await
+        };
+    }
+    macro_rules! keyed {
+        ($m:ident, $env:literal) => {
+            $m::upload(client, data, $m::API_URL, &get_env($env)?).await
+        };
+    }
+
     let url = match hosting {
-        Hosting::Beeimg => beeimg::upload(client, data, beeimg::API_URL).await,
-        Hosting::Catbox => catbox::upload(client, data, catbox::API_URL).await,
-        Hosting::Fastpic => fastpic::upload(client, data, fastpic::API_URL).await,
-        Hosting::Kappa => kappa::upload(client, data, kappa::API_URL).await,
-        Hosting::Pixhost => pixhost::upload(client, data, pixhost::API_URL).await,
-        Hosting::Sxcu => sxcu::upload(client, data, sxcu::API_URL).await,
+        Hosting::Beeimg => anon!(beeimg),
+        Hosting::Catbox => anon!(catbox),
+        Hosting::Fastpic => anon!(fastpic),
+        Hosting::Gofile => anon!(gofile),
+        Hosting::Imgbox => anon!(imgbox),
+        Hosting::Kappa => anon!(kappa),
+        Hosting::Pixhost => anon!(pixhost),
+        Hosting::Sxcu => anon!(sxcu),
+        Hosting::Filepost => keyed!(filepost, "FILEPOST_KEY"),
+        Hosting::Freeimage => keyed!(freeimage, "FREEIMAGE_KEY"),
+        Hosting::Gyazo => keyed!(gyazo, "GYAZO_TOKEN"),
+        Hosting::Imageban => keyed!(imageban, "IMAGEBAN_TOKEN"),
+        Hosting::Imagekit => keyed!(imagekit, "IMAGEKIT_PRIVATE_KEY"),
+        Hosting::Imgbb => keyed!(imgbb, "IMGBB_KEY"),
+        Hosting::Imgchest => keyed!(imgchest, "IMGCHEST_KEY"),
+        Hosting::Imghippo => keyed!(imghippo, "IMGHIPPO_KEY"),
+        Hosting::Imglink => keyed!(imglink, "IMGLINK_KEY"),
+        Hosting::Lensdump => keyed!(lensdump, "LENSDUMP_KEY"),
+        Hosting::Pixeldrain => keyed!(pixeldrain, "PIXELDRAIN_KEY"),
+        Hosting::Pixvid => keyed!(pixvid, "PIXVID_KEY"),
+        Hosting::Postimages => keyed!(postimages, "POSTIMAGES_KEY"),
+        Hosting::Ptpimg => keyed!(ptpimg, "PTPIMG_KEY"),
+        Hosting::Thumbsnap => keyed!(thumbsnap, "THUMBSNAP_KEY"),
+        Hosting::Tixte => keyed!(tixte, "TIXTE_KEY"),
+        Hosting::Uplio => keyed!(uplio, "UPLIO_KEY"),
+        Hosting::Uploadcare => keyed!(uploadcare, "UPLOADCARE_KEY"),
+        Hosting::Vgy => keyed!(vgy, "VGY_KEY"),
+        Hosting::Zpic => keyed!(zpic, "ZPIC_KEY"),
         Hosting::Cloudinary => {
             let cloud_name = get_env("CLOUDINARY_CLOUD_NAME")?;
             let api_key = get_env("CLOUDINARY_API_KEY")?;
@@ -124,92 +153,10 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
             let url = format!("{}/{cloud_name}/image/upload", cloudinary::API_URL);
             cloudinary::upload(client, data, &url, &api_key, &api_secret).await
         }
-        Hosting::Filepost => {
-            let key = get_env("FILEPOST_KEY")?;
-            filepost::upload(client, data, filepost::API_URL, &key).await
-        }
-        Hosting::Freeimage => {
-            let key = get_env("FREEIMAGE_KEY")?;
-            freeimage::upload(client, data, freeimage::API_URL, &key).await
-        }
-        Hosting::Gofile => gofile::upload(client, data, gofile::API_URL).await,
-        Hosting::Gyazo => {
-            let token = get_env("GYAZO_TOKEN")?;
-            gyazo::upload(client, data, gyazo::API_URL, &token).await
-        }
-        Hosting::Imageban => {
-            let token = get_env("IMAGEBAN_TOKEN")?;
-            imageban::upload(client, data, imageban::API_URL, &token).await
-        }
-        Hosting::Imagekit => {
-            let key = get_env("IMAGEKIT_PRIVATE_KEY")?;
-            imagekit::upload(client, data, imagekit::API_URL, &key).await
-        }
-        Hosting::Imgbb => {
-            let key = get_env("IMGBB_KEY")?;
-            imgbb::upload(client, data, imgbb::API_URL, &key).await
-        }
-        Hosting::Imghippo => {
-            let key = get_env("IMGHIPPO_KEY")?;
-            imghippo::upload(client, data, imghippo::API_URL, &key).await
-        }
-        Hosting::Imglink => {
-            let key = get_env("IMGLINK_KEY")?;
-            imglink::upload(client, data, imglink::API_URL, &key).await
-        }
-        Hosting::Imgbox => imgbox::upload(client, data, imgbox::API_URL).await,
-        Hosting::Imgchest => {
-            let key = get_env("IMGCHEST_KEY")?;
-            imgchest::upload(client, data, imgchest::API_URL, &key).await
-        }
         Hosting::Imgur => {
             let client_id = std::env::var("IMGUR_CLIENT_ID")
                 .unwrap_or_else(|_| imgur::DEFAULT_CLIENT_ID.to_owned());
             imgur::upload(client, data, imgur::API_URL, &client_id).await
-        }
-        Hosting::Lensdump => {
-            let key = get_env("LENSDUMP_KEY")?;
-            lensdump::upload(client, data, lensdump::API_URL, &key).await
-        }
-        Hosting::Pixeldrain => {
-            let key = get_env("PIXELDRAIN_KEY")?;
-            pixeldrain::upload(client, data, pixeldrain::API_URL, &key).await
-        }
-        Hosting::Pixvid => {
-            let key = get_env("PIXVID_KEY")?;
-            pixvid::upload(client, data, pixvid::API_URL, &key).await
-        }
-        Hosting::Postimages => {
-            let key = get_env("POSTIMAGES_KEY")?;
-            postimages::upload(client, data, postimages::API_URL, &key).await
-        }
-        Hosting::Ptpimg => {
-            let key = get_env("PTPIMG_KEY")?;
-            ptpimg::upload(client, data, ptpimg::API_URL, &key).await
-        }
-        Hosting::Thumbsnap => {
-            let key = get_env("THUMBSNAP_KEY")?;
-            thumbsnap::upload(client, data, thumbsnap::API_URL, &key).await
-        }
-        Hosting::Tixte => {
-            let key = get_env("TIXTE_KEY")?;
-            tixte::upload(client, data, tixte::API_URL, &key).await
-        }
-        Hosting::Uplio => {
-            let key = get_env("UPLIO_KEY")?;
-            uplio::upload(client, data, uplio::API_URL, &key).await
-        }
-        Hosting::Uploadcare => {
-            let key = get_env("UPLOADCARE_KEY")?;
-            uploadcare::upload(client, data, uploadcare::API_URL, &key).await
-        }
-        Hosting::Vgy => {
-            let key = get_env("VGY_KEY")?;
-            vgy::upload(client, data, vgy::API_URL, &key).await
-        }
-        Hosting::Zpic => {
-            let key = get_env("ZPIC_KEY")?;
-            zpic::upload(client, data, zpic::API_URL, &key).await
         }
     }?;
 
