@@ -5,6 +5,7 @@ use serde::Deserialize;
 use tracing::debug;
 
 use super::{parse_json, response_text};
+use crate::image::detect_format;
 use crate::{TIMEOUT, USER_AGENT};
 
 pub const API_URL: &str = "https://imgbox.com";
@@ -32,6 +33,9 @@ struct UploadResponse {
 /// No API key required. Uses a CSRF token + session cookie flow.
 /// A local cookie-aware client maintains the session across the three steps.
 pub async fn upload(_client: &Client, data: Vec<u8>, url: &str) -> Result<String> {
+    let ext = detect_format(&data)?;
+    let filename = format!("image.{}", ext.extensions_str()[0]);
+
     let client = reqwest::Client::builder()
         .user_agent(USER_AGENT)
         .cookie_store(true)
@@ -53,7 +57,7 @@ pub async fn upload(_client: &Client, data: Vec<u8>, url: &str) -> Result<String
         .text("content_type", "1")
         .text("thumbnail_size", "100r")
         .text("comments_enabled", "0")
-        .part("files[]", Part::bytes(data).file_name("image.png"));
+        .part("files[]", Part::bytes(data).file_name(filename));
 
     let resp = client
         .post(format!("{url}/upload/process"))
@@ -158,10 +162,10 @@ mod tests {
             .mount(&mock_server)
             .await;
 
+        let png = crate::image::create_test_png();
+
         let client = Client::new();
-        let url = upload(&client, vec![1, 2, 3], &mock_server.uri())
-            .await
-            .unwrap();
+        let url = upload(&client, png, &mock_server.uri()).await.unwrap();
         assert_eq!(url, "https://images2.imgbox.com/test/img_o.png");
     }
 
