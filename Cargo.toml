@@ -29,7 +29,7 @@ image   = { version = "0.25", default-features = false, features = ["png", "jpeg
 
 # System integration
 arboard     = { version = "3.6", default-features = false, features = ["wayland-data-control"] }
-notify-rust = { version = "4.17" }
+notify-rust = { version = "4.18" }
 
 # Error handling & logging
 anyhow             = { version = "1.0" }
