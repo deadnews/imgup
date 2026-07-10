@@ -35,7 +35,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
 
     let resp = client
         .post(url)
-        .header("Authorization", format!("Bearer {key}"))
+        .bearer_auth(key)
         .multipart(form)
         .send()
         .await

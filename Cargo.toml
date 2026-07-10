@@ -45,7 +45,8 @@ lto           = true
 strip         = true
 
 [lints.rust]
-unsafe_code = "forbid"
+unsafe_code             = "forbid"
+dead_code_pub_in_binary = "warn"
 
 [lints.clippy]
 pedantic    = { level = "warn", priority = -1 }

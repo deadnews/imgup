@@ -21,7 +21,7 @@ up:
 	cargo update --recursive --verbose
 	cargo upgrade --incompatible
 up-ci:
-	prek auto-update --freeze
+	prek update --freeze
 	pinact run --update
 
 build:

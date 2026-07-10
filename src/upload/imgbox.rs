@@ -32,7 +32,7 @@ struct UploadResponse {
 ///
 /// No API key required. Uses a CSRF token + session cookie flow.
 /// A local cookie-aware client maintains the session across the three steps.
-pub async fn upload(_client: &Client, data: Vec<u8>, url: &str) -> Result<String> {
+pub async fn upload(data: Vec<u8>, url: &str) -> Result<String> {
     let ext = detect_format(&data)?;
     let filename = format!("image.{}", ext.extensions_str()[0]);
 
@@ -164,8 +164,7 @@ mod tests {
 
         let png = crate::image::create_test_png();
 
-        let client = Client::new();
-        let url = upload(&client, png, &mock_server.uri()).await.unwrap();
+        let url = upload(png, &mock_server.uri()).await.unwrap();
         assert_eq!(url, "https://images2.imgbox.com/test/img_o.png");
     }
 

@@ -122,7 +122,6 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
         Hosting::Catbox => anon!(catbox),
         Hosting::Fastpic => anon!(fastpic),
         Hosting::Gofile => anon!(gofile),
-        Hosting::Imgbox => anon!(imgbox),
         Hosting::Kappa => anon!(kappa),
         Hosting::Pixhost => anon!(pixhost),
         Hosting::Sxcu => anon!(sxcu),
@@ -146,6 +145,7 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
         Hosting::Uploadcare => keyed!(uploadcare, "UPLOADCARE_KEY"),
         Hosting::Vgy => keyed!(vgy, "VGY_KEY"),
         Hosting::Zpic => keyed!(zpic, "ZPIC_KEY"),
+        Hosting::Imgbox => imgbox::upload(data, imgbox::API_URL).await,
         Hosting::Cloudinary => {
             let cloud_name = get_env("CLOUDINARY_CLOUD_NAME")?;
             let api_key = get_env("CLOUDINARY_API_KEY")?;

@@ -20,7 +20,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, token: &str) -> R
 
     let resp = client
         .post(url)
-        .header("Authorization", format!("Bearer {token}"))
+        .bearer_auth(token)
         .multipart(form)
         .send()
         .await

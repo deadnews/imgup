@@ -12,7 +12,7 @@ use anyhow::{Context, Result};
 use clap::Parser;
 use futures::stream::{self, StreamExt};
 use tracing::level_filters::LevelFilter;
-use tracing::{error, info};
+use tracing::{error, info, warn};
 use tracing_subscriber::fmt;
 
 use crate::cli::Args;
@@ -51,7 +51,7 @@ fn load_env(args: &Args) -> Result<()> {
     if let Some(path) = util::get_config_path().filter(|p| p.exists())
         && let Err(e) = dotenvy::from_path(&path)
     {
-        error!("failed to load env file {}: {e}", path.display());
+        warn!("failed to load env file {}: {e}", path.display());
     }
     Ok(())
 }

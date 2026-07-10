@@ -52,8 +52,7 @@ fn test_missing_env_file_fails() {
 }
 
 #[test]
-fn test_hosting_values() {
-    // Verify invalid hosting value is rejected
+fn test_invalid_hosting_rejected() {
     let output = imgup()
         .args(["--hosting", "invalid", "dummy.png"])
         .output()
@@ -64,8 +63,7 @@ fn test_hosting_values() {
 }
 
 #[test]
-fn test_format_values() {
-    // Verify invalid format value is rejected
+fn test_invalid_format_rejected() {
     let output = imgup()
         .args(["--format", "invalid", "dummy.png"])
         .output()
