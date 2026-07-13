@@ -1,5 +1,19 @@
 # Changelog
 
+## [4.1.0](https://github.com/deadnews/imgup/compare/v4.0.3...v4.1.0) - 2026-07-13
+
+### Features
+
+- _(hostings)_ add `redacted`, drop discontinued `ptpimg` - ([6c091ae](https://github.com/deadnews/imgup/commit/6c091ae059cd43eb82eb411fcd20a240a3410dc5))
+
+### Bug fixes
+
+- _(upload)_ cap response body in error messages - ([26da746](https://github.com/deadnews/imgup/commit/26da746e55e9b52a5cd7ddc30d884806b3aa57a5))
+
+### Refactor
+
+- _(upload)_ use `bearer_auth` - ([151958c](https://github.com/deadnews/imgup/commit/151958c9784c8889c81cc4e7ef3864f6039cd734))
+
 ## [4.0.3](https://github.com/deadnews/imgup/compare/v4.0.2...v4.0.3) - 2026-06-24
 
 ### Features
