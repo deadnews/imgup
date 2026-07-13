@@ -50,7 +50,7 @@ yay -S imgup-bin
 | [pixeldrain](https://pixeldrain.com/) |  +  | `https://pixeldrain.com/api/file/{id}`                     |
 | [pixvid](https://pixvid.org/)         |  +  | `https://pixvid.org/images/2022/07/30/{id}.png`            |
 | [postimages](https://postimages.org/) |  +  | `https://i.postimg.cc/{id}/img.png`                        |
-| [ptpimg](https://ptpimg.me/)          |  +  | `https://ptpimg.me/{id}.png`                               |
+| [redacted](https://redacted.sh/)      |  +  | `https://redacted.sh/i/{id}.png`                           |
 | [thumbsnap](https://thumbsnap.com/)   |  +  | `https://thumbsnap.com/i/{id}.png`                         |
 | [tixte](https://tixte.com/)           |  +  | `https://{domain}.tixte.co/r/{id}.png`                     |
 | [uplio](https://upl.io/)              |  +  | `https://upl.io/i/{id}.png`                                |
@@ -101,7 +101,7 @@ LENSDUMP_KEY=
 PIXELDRAIN_KEY=
 PIXVID_KEY=
 POSTIMAGES_KEY=
-PTPIMG_KEY=
+REDACTED_API_KEY=
 THUMBSNAP_KEY=
 TIXTE_KEY=
 UPLIO_KEY=

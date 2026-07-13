@@ -20,7 +20,7 @@ mod pixeldrain;
 mod pixhost;
 mod pixvid;
 mod postimages;
-mod ptpimg;
+mod redacted;
 mod sxcu;
 mod thumbsnap;
 mod tixte;
@@ -84,7 +84,7 @@ pub enum Hosting {
     Pixhost,
     Pixvid,
     Postimages,
-    Ptpimg,
+    Redacted,
     Sxcu,
     Thumbsnap,
     Tixte,
@@ -138,7 +138,7 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
         Hosting::Pixeldrain => keyed!(pixeldrain, "PIXELDRAIN_KEY"),
         Hosting::Pixvid => keyed!(pixvid, "PIXVID_KEY"),
         Hosting::Postimages => keyed!(postimages, "POSTIMAGES_KEY"),
-        Hosting::Ptpimg => keyed!(ptpimg, "PTPIMG_KEY"),
+        Hosting::Redacted => keyed!(redacted, "REDACTED_API_KEY"),
         Hosting::Thumbsnap => keyed!(thumbsnap, "THUMBSNAP_KEY"),
         Hosting::Tixte => keyed!(tixte, "TIXTE_KEY"),
         Hosting::Uplio => keyed!(uplio, "UPLIO_KEY"),
