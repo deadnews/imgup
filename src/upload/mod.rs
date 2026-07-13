@@ -29,7 +29,7 @@ mod uploadcare;
 mod vgy;
 mod zpic;
 
-use anyhow::{Context, Result, ensure};
+use anyhow::{Context, Result, bail, ensure};
 use clap::ValueEnum;
 use reqwest::Client;
 use serde::de::DeserializeOwned;
@@ -37,15 +37,26 @@ use tracing::debug;
 
 use crate::util::get_env;
 
-/// Parse a JSON response, checking status and logging the body at debug level on failure.
+/// Cap `body` for an error message, logging the full body at debug when truncated.
+fn error_body(body: &str) -> String {
+    const MAX_BYTES: usize = 128;
+    let end = body.floor_char_boundary(MAX_BYTES);
+    if end == body.len() {
+        body.to_owned()
+    } else {
+        debug!("Response text:\n{body}");
+        format!("{}…", &body[..end])
+    }
+}
+
+/// Parse a JSON response, checking status first.
 pub(crate) async fn parse_json<T: DeserializeOwned>(
     resp: reqwest::Response,
     provider: &str,
 ) -> Result<T> {
     let body = response_text(resp, provider).await?;
     serde_json::from_str(&body)
-        .inspect_err(|_| debug!("Response text:\n{body}"))
-        .with_context(|| format!("failed to parse {provider} response"))
+        .with_context(|| format!("failed to parse {provider} response: {}", error_body(&body)))
 }
 
 /// Read response text, checking status first.
@@ -56,7 +67,9 @@ pub(crate) async fn response_text(resp: reqwest::Response, provider: &str) -> Re
         .await
         .with_context(|| format!("failed to read {provider} response"))?;
 
-    ensure!(status.is_success(), "{provider} returned {status}: {body}");
+    if !status.is_success() {
+        bail!("{provider} returned {status}: {}", error_body(&body));
+    }
     Ok(body)
 }
 
@@ -162,4 +175,28 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
 
     ensure!(!url.is_empty(), "{hosting} returned empty URL");
     Ok(url)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::error_body;
+
+    #[test]
+    fn test_error_body_short_unchanged() {
+        assert_eq!(error_body("boom"), "boom");
+    }
+
+    #[test]
+    fn test_error_body_long_truncated() {
+        let s = error_body(&"a".repeat(300));
+        assert_eq!(s.chars().count(), 129);
+        assert!(s.ends_with('…'));
+    }
+
+    #[test]
+    fn test_error_body_multibyte_char_boundary() {
+        let s = error_body(&"あ".repeat(100));
+        assert_eq!(s.chars().count(), 43);
+        assert!(s.ends_with('…'));
+    }
 }
