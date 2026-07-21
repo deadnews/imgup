@@ -16,10 +16,10 @@ dotenvy = { version = "0.15" }
 # Async & HTTP
 futures = { version = "0.3", default-features = false, features = ["alloc"] }
 reqwest = { version = "0.13", default-features = false, features = ["rustls", "multipart", "cookies", "form"] }
-tokio   = { version = "1.52", features = ["fs", "macros", "rt-multi-thread"] }
+tokio   = { version = "1.53", features = ["fs", "macros", "rt-multi-thread"] }
 
 # Serialization
-base64     = { version = "0.22" }
+base64     = { version = "0.23" }
 serde      = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0" }
 
