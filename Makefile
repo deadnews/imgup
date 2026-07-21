@@ -1,4 +1,4 @@
-.PHONY: all clean default run build update up check lint pc test release
+.PHONY: alpha build bumped check lint pc release test up update
 
 default: check
 
@@ -30,7 +30,12 @@ build:
 bumped:
 	git cliff --bumped-version
 
-# make release TAG=$(git cliff --bumped-version)-alpha.0
+# make alpha TAG=$(git cliff --bumped-version)-alpha.0
+alpha: check
+	git tag -a $(TAG) -m "chore(release): $(TAG)"
+	git push origin $(TAG)
+
+# make release TAG=$(git cliff --bumped-version)
 release: check
 	git cliff -o CHANGELOG.md --tag $(TAG)
 	prek run --files CHANGELOG.md || prek run --files CHANGELOG.md
