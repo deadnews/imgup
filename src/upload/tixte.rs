@@ -22,9 +22,8 @@ struct Data {
 ///
 /// Requires API key.
 pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Result<String> {
-    let ext = detect_format(&data)?;
-    let ext_str = ext.extensions_str()[0];
-    let filename = format!("img.{ext_str}");
+    let ext = detect_format(&data)?.extensions_str()[0];
+    let filename = format!("img.{ext}");
 
     let form = Form::new()
         .text("payload_json", r#"{"random":true}"#)

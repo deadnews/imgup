@@ -33,8 +33,7 @@ struct UploadResponse {
 /// No API key required. Uses a CSRF token + session cookie flow.
 /// A local cookie-aware client maintains the session across the three steps.
 pub async fn upload(data: Vec<u8>, url: &str) -> Result<String> {
-    let ext = detect_format(&data)?;
-    let filename = format!("image.{}", ext.extensions_str()[0]);
+    let filename = format!("image.{}", detect_format(&data)?.extensions_str()[0]);
 
     let client = reqwest::Client::builder()
         .user_agent(USER_AGENT)

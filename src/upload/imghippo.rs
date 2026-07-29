@@ -22,13 +22,11 @@ struct Data {
 ///
 /// Requires API key.
 pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Result<String> {
-    let ext = detect_format(&data)?;
-    let ext_str = ext.extensions_str()[0];
+    let ext = detect_format(&data)?.extensions_str()[0];
 
-    let form = Form::new().text("api_key", key.to_owned()).part(
-        "file",
-        Part::bytes(data).file_name(format!("img.{ext_str}")),
-    );
+    let form = Form::new()
+        .text("api_key", key.to_owned())
+        .part("file", Part::bytes(data).file_name(format!("img.{ext}")));
 
     let resp = client
         .post(url)

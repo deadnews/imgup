@@ -64,13 +64,9 @@ async fn get_server(client: &Client, servers_url: &str) -> Result<String> {
 }
 
 async fn upload_to(client: &Client, data: Vec<u8>, upload_url: &str) -> Result<String> {
-    let ext = detect_format(&data)?;
-    let ext_str = ext.extensions_str()[0];
+    let ext = detect_format(&data)?.extensions_str()[0];
 
-    let form = Form::new().part(
-        "file",
-        Part::bytes(data).file_name(format!("img.{ext_str}")),
-    );
+    let form = Form::new().part("file", Part::bytes(data).file_name(format!("img.{ext}")));
 
     let resp = client
         .post(upload_url)

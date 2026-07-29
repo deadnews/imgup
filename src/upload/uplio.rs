@@ -12,9 +12,8 @@ pub const API_URL: &str = "https://upl.io";
 ///
 /// Requires API key.
 pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Result<String> {
-    let ext = detect_format(&data)?;
-    let ext_str = ext.extensions_str()[0];
-    let filename = format!("img.{ext_str}");
+    let ext = detect_format(&data)?.extensions_str()[0];
+    let filename = format!("img.{ext}");
 
     let form = Form::new()
         .text("key", key.to_owned())
@@ -35,7 +34,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         bail!("unexpected uplio response format");
     };
     let uid_base = uid.rsplit_once('.').map_or(uid, |(base, _)| base);
-    Ok(format!("{host}/i/{uid_base}.{ext_str}"))
+    Ok(format!("{host}/i/{uid_base}.{ext}"))
 }
 
 #[cfg(test)]

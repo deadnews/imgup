@@ -17,8 +17,7 @@ struct Response {
 ///
 /// No authentication required.
 pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String> {
-    let ext = detect_format(&data)?;
-    let ext_str = ext.extensions_str()[0];
+    let ext = detect_format(&data)?.extensions_str()[0];
 
     let form = Form::new().part("file", Part::bytes(data).file_name("image"));
 
@@ -30,7 +29,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String>
         .context("failed to send request to sxcu")?;
 
     let resp: Response = parse_json(resp, "sxcu").await?;
-    Ok(format!("{}.{ext_str}", resp.url))
+    Ok(format!("{}.{ext}", resp.url))
 }
 
 #[cfg(test)]

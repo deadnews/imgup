@@ -17,15 +17,14 @@ struct Response {
 ///
 /// Requires API key (public key).
 pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Result<String> {
-    let ext = detect_format(&data)?;
-    let ext_str = ext.extensions_str()[0];
+    let ext = detect_format(&data)?.extensions_str()[0];
 
     let form = Form::new()
         .text("UPLOADCARE_PUB_KEY", key.to_owned())
         .text("UPLOADCARE_STORE", "1")
         .part(
             "filename",
-            Part::bytes(data).file_name(format!("img.{ext_str}")),
+            Part::bytes(data).file_name(format!("img.{ext}")),
         );
 
     let resp = client
@@ -36,10 +35,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .context("failed to send request to uploadcare")?;
 
     let resp: Response = parse_json(resp, "uploadcare").await?;
-    Ok(format!(
-        "https://ucarecdn.com/{}/img.{ext_str}",
-        resp.filename
-    ))
+    Ok(format!("https://ucarecdn.com/{}/img.{ext}", resp.filename))
 }
 
 #[cfg(test)]
