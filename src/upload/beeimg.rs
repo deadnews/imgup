@@ -37,7 +37,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String>
     let resp = client.post(url).multipart(form).send().await?;
 
     let resp: Response = parse_json(resp, "beeimg").await?;
-    Ok(format!("https:{}", resp.files.url))
+    Ok(resp.files.url)
 }
 
 #[cfg(test)]
@@ -53,7 +53,14 @@ mod tests {
 
         Mock::given(method("POST"))
             .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
-                "files": {"url": "//beeimg.com/images/x80784797021.png"}
+                "files": {
+                    "name": "x8078479702",
+                    "size": "91",
+                    "url": "https://beeimg.com/images/x80784797021.png",
+                    "thumbnail_url": "https://i.beeimg.com/images/thumb/x80784797021-xs.png",
+                    "status": "OK",
+                    "code": "200"
+                }
             })))
             .mount(&mock_server)
             .await;
