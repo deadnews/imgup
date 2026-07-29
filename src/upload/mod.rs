@@ -179,7 +179,27 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
 
 #[cfg(test)]
 mod tests {
-    use super::error_body;
+    use std::collections::BTreeSet;
+
+    use super::{Hosting, ValueEnum, error_body};
+
+    #[test]
+    fn test_harness_lists_every_hosting() {
+        let mk = include_str!("../../Makefile.test.mk");
+        let listed: BTreeSet<&str> = mk
+            .lines()
+            .find_map(|l| l.strip_prefix("HOSTINGS :="))
+            .expect("HOSTINGS line")
+            .split_whitespace()
+            .collect();
+
+        let all: Vec<String> = Hosting::value_variants()
+            .iter()
+            .map(ToString::to_string)
+            .collect();
+
+        assert_eq!(listed, all.iter().map(String::as_str).collect());
+    }
 
     #[test]
     fn test_error_body_short_unchanged() {
