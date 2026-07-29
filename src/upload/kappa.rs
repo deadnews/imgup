@@ -30,12 +30,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String>
             .context("invalid mime type")?,
     );
 
-    let resp = client
-        .post(url)
-        .multipart(form)
-        .send()
-        .await
-        .context("failed to send request to kappa")?;
+    let resp = client.post(url).multipart(form).send().await?;
 
     let resp: Response = parse_json(resp, "kappa").await?;
     Ok(format!("{}{}", resp.link, resp.ext))

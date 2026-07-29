@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
@@ -32,8 +32,7 @@ pub async fn upload(
         .basic_auth(api_key, Some(api_secret))
         .multipart(form)
         .send()
-        .await
-        .context("failed to send request to cloudinary")?;
+        .await?;
 
     let resp: Response = parse_json(resp, "cloudinary").await?;
     Ok(resp.secure_url)

@@ -21,12 +21,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String>
         .text("content_type", "0")
         .part("img", Part::bytes(data).file_name("image"));
 
-    let resp = client
-        .post(url)
-        .multipart(form)
-        .send()
-        .await
-        .context("failed to send request to pixhost")?;
+    let resp = client.post(url).multipart(form).send().await?;
 
     let resp: Response = parse_json(resp, "pixhost").await?;
 

@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
@@ -29,8 +29,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .basic_auth(key, Option::<&str>::None)
         .multipart(form)
         .send()
-        .await
-        .context("failed to send request to imagekit")?;
+        .await?;
 
     let resp: Response = parse_json(resp, "imagekit").await?;
     Ok(resp.url)

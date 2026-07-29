@@ -1,4 +1,4 @@
-use anyhow::{Context, Result, anyhow};
+use anyhow::{Result, anyhow};
 use base64::Engine as _;
 use reqwest::Client;
 use tracing::debug;
@@ -25,8 +25,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
             ("m", "fb733cccce28e7db3ff9f17d7ccff3d1"),
         ])
         .send()
-        .await
-        .context("failed to send request to postimages")?;
+        .await?;
 
     let body = response_text(resp, "postimages").await?;
     extract_hotlink(&body)

@@ -34,12 +34,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String>
             .context("invalid mime type")?,
     );
 
-    let resp = client
-        .post(url)
-        .multipart(form)
-        .send()
-        .await
-        .context("failed to send request to beeimg")?;
+    let resp = client.post(url).multipart(form).send().await?;
 
     let resp: Response = parse_json(resp, "beeimg").await?;
     Ok(format!("https:{}", resp.files.url))

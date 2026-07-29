@@ -43,11 +43,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, servers_url: &str) -> Result
 }
 
 async fn get_server(client: &Client, servers_url: &str) -> Result<String> {
-    let resp = client
-        .get(servers_url)
-        .send()
-        .await
-        .context("failed to fetch gofile server list")?;
+    let resp = client.get(servers_url).send().await?;
 
     let resp: ServersResponse = parse_json(resp, "gofile servers").await?;
     let server = resp
@@ -68,12 +64,7 @@ async fn upload_to(client: &Client, data: Vec<u8>, upload_url: &str) -> Result<S
 
     let form = Form::new().part("file", Part::bytes(data).file_name(format!("img.{ext}")));
 
-    let resp = client
-        .post(upload_url)
-        .multipart(form)
-        .send()
-        .await
-        .context("failed to send request to gofile")?;
+    let resp = client.post(upload_url).multipart(form).send().await?;
 
     let resp: UploadResponse = parse_json(resp, "gofile").await?;
     Ok(resp.data.download_page)

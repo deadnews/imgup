@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
@@ -34,8 +34,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .header("Authorization", key)
         .multipart(form)
         .send()
-        .await
-        .context("failed to send request to tixte")?;
+        .await?;
 
     let resp: Response = parse_json(resp, "tixte").await?;
     Ok(resp.data.direct_url)

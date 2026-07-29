@@ -40,8 +40,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .header("Authorization", key)
         .multipart(form)
         .send()
-        .await
-        .context("failed to send request to redacted")?;
+        .await?;
 
     let resp: Response = parse_json(resp, "redacted").await?;
     Ok(resp.data.url)

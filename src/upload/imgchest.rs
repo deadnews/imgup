@@ -37,8 +37,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .bearer_auth(key)
         .multipart(form)
         .send()
-        .await
-        .context("failed to send request to imgchest")?;
+        .await?;
 
     let resp: Response = parse_json(resp, "imgchest").await?;
 

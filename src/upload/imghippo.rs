@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
@@ -28,12 +28,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .text("api_key", key.to_owned())
         .part("file", Part::bytes(data).file_name(format!("img.{ext}")));
 
-    let resp = client
-        .post(url)
-        .multipart(form)
-        .send()
-        .await
-        .context("failed to send request to imghippo")?;
+    let resp = client.post(url).multipart(form).send().await?;
 
     let resp: Response = parse_json(resp, "imghippo").await?;
     Ok(resp.data.url)

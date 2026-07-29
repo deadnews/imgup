@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
@@ -30,8 +30,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .header("X-API-Key", key)
         .multipart(form)
         .send()
-        .await
-        .context("failed to send request to zpic")?;
+        .await?;
 
     let resp: Response = parse_json(resp, "zpic").await?;
     Ok(resp.image.url)

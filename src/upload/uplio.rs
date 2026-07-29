@@ -1,4 +1,4 @@
-use anyhow::{Context, Result, bail};
+use anyhow::{Result, bail};
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use tracing::debug;
@@ -19,12 +19,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .text("key", key.to_owned())
         .part("file", Part::bytes(data).file_name(filename));
 
-    let resp = client
-        .post(url)
-        .multipart(form)
-        .send()
-        .await
-        .context("failed to send request to uplio")?;
+    let resp = client.post(url).multipart(form).send().await?;
 
     let text = response_text(resp, "uplio").await?;
 

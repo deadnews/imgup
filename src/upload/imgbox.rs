@@ -63,8 +63,7 @@ pub async fn upload(data: Vec<u8>, url: &str) -> Result<String> {
         .header("X-CSRF-Token", &csrf_token)
         .multipart(form)
         .send()
-        .await
-        .context("failed to send upload request to imgbox")?;
+        .await?;
 
     let resp: UploadResponse = parse_json(resp, "imgbox").await?;
 
@@ -77,11 +76,7 @@ pub async fn upload(data: Vec<u8>, url: &str) -> Result<String> {
 }
 
 async fn fetch_csrf(client: &Client, base_url: &str) -> Result<String> {
-    let resp = client
-        .get(base_url)
-        .send()
-        .await
-        .context("failed to fetch imgbox main page")?;
+    let resp = client.get(base_url).send().await?;
     let body = response_text(resp, "imgbox").await?;
     let csrf_token = extract_csrf_token(&body)?;
     debug!("csrf_token={csrf_token}");
@@ -113,8 +108,7 @@ async fn fetch_token(client: &Client, base_url: &str, csrf_token: &str) -> Resul
             ("comments_enabled", "0"),
         ])
         .send()
-        .await
-        .context("failed to fetch imgbox upload token")?;
+        .await?;
 
     parse_json(resp, "imgbox token").await
 }

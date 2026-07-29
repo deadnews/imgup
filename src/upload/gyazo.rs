@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
@@ -23,8 +23,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, token: &str) -> R
         .bearer_auth(token)
         .multipart(form)
         .send()
-        .await
-        .context("failed to send request to gyazo")?;
+        .await?;
 
     let resp: Response = parse_json(resp, "gyazo").await?;
     Ok(resp.url)

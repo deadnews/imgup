@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 use serde::Deserialize;
@@ -23,8 +23,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .basic_auth("", Some(key))
         .multipart(form)
         .send()
-        .await
-        .context("failed to send request to pixeldrain")?;
+        .await?;
 
     let resp: Response = parse_json(resp, "pixeldrain").await?;
     Ok(format!("https://pixeldrain.com/api/file/{}", resp.id))

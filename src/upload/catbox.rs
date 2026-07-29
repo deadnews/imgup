@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use reqwest::Client;
 use reqwest::multipart::{Form, Part};
 
@@ -14,12 +14,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str) -> Result<String>
         .text("reqtype", "fileupload")
         .part("fileToUpload", Part::bytes(data).file_name("image"));
 
-    let resp = client
-        .post(url)
-        .multipart(form)
-        .send()
-        .await
-        .context("failed to send request to catbox")?;
+    let resp = client.post(url).multipart(form).send().await?;
 
     response_text(resp, "catbox").await
 }

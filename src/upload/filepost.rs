@@ -34,8 +34,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
         .header("X-API-Key", key)
         .multipart(form)
         .send()
-        .await
-        .context("failed to send request to filepost")?;
+        .await?;
 
     let resp: Response = parse_json(resp, "filepost").await?;
     Ok(resp.url)
