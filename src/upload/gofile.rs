@@ -80,7 +80,6 @@ async fn upload_to(client: &Client, data: Vec<u8>, upload_url: &str) -> Result<S
 }
 
 #[cfg(test)]
-#[expect(clippy::unwrap_used)]
 mod tests {
     use wiremock::matchers::method;
     use wiremock::{Mock, MockServer, ResponseTemplate};

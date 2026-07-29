@@ -120,7 +120,6 @@ async fn fetch_token(client: &Client, base_url: &str, csrf_token: &str) -> Resul
 }
 
 #[cfg(test)]
-#[expect(clippy::unwrap_used)]
 mod tests {
     use wiremock::matchers::{method, path};
     use wiremock::{Mock, MockServer, ResponseTemplate};

@@ -46,7 +46,6 @@ fn extract_tag(body: &str, tag: &str) -> Option<String> {
 }
 
 #[cfg(test)]
-#[expect(clippy::unwrap_used)]
 mod tests {
     use wiremock::matchers::method;
     use wiremock::{Mock, MockServer, ResponseTemplate};

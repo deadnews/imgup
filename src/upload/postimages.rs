@@ -45,7 +45,6 @@ fn extract_hotlink(xml: &str) -> Result<String> {
 }
 
 #[cfg(test)]
-#[expect(clippy::unwrap_used)]
 mod tests {
     use wiremock::matchers::method;
     use wiremock::{Mock, MockServer, ResponseTemplate};

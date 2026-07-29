@@ -31,7 +31,6 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, token: &str) -> R
 }
 
 #[cfg(test)]
-#[expect(clippy::unwrap_used)]
 mod tests {
     use wiremock::matchers::{header, method};
     use wiremock::{Mock, MockServer, ResponseTemplate};

@@ -65,7 +65,6 @@ async fn extract_direct_link(client: &Client, show_url: &str) -> Result<String> 
 }
 
 #[cfg(test)]
-#[expect(clippy::unwrap_used)]
 mod tests {
     use wiremock::matchers::method;
     use wiremock::{Mock, MockServer, ResponseTemplate};

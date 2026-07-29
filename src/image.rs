@@ -127,7 +127,6 @@ pub(crate) fn create_test_png() -> Vec<u8> {
 }
 
 #[cfg(test)]
-#[expect(clippy::unwrap_used)]
 mod tests {
     use super::*;
 
