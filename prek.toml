@@ -24,14 +24,14 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/crate-ci/typos"
-rev = "bee27e3a4fd1ea2111cf90ab89cd076c870fce14" # frozen: v1.48.0
+rev = "8a48f81b6c64dcfea44b3633223084c4be58ac5f" # frozen: v1.49.0
 hooks = [
   { id = "typos" },
 ]
 
 [[repos]]
 repo = "https://github.com/python-jsonschema/check-jsonschema"
-rev = "6b63472e72e1a91ed8a2f6d483790dfb644fa1d3" # frozen: 0.37.4
+rev = "12e63946db2c5cfcc9030fac21c3883ba88c6ed8" # frozen: 0.38.0
 hooks = [
   { id = "check-github-workflows" },
   { id = "check-renovate" },
@@ -46,7 +46,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/zizmorcore/zizmor-pre-commit"
-rev = "067260dc5fe6ea86b7551bfd6f8b3ba4e6c93129" # frozen: v1.28.0
+rev = "451b56af716f9f0d0c2b816503a3fd0cf8b036fa" # frozen: v1.29.0
 hooks = [
   { id = "zizmor", args = ["--fix=safe"] },
 ]
@@ -60,7 +60,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/aleksac/hadolint-py"
-rev = "458cb25edf664682e3e856a53a2f9af33e068297" # frozen: v2.14.0
+rev = "6e7504451511eaeb62a3e7f14d63b0296cbf86eb" # frozen: v2.15.1
 hooks = [
   { id = "hadolint" },
 ]
