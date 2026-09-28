@@ -10,7 +10,7 @@ keywords    = ["image", "upload", "cli"]
 [dependencies]
 # CLI & config
 clap    = { version = "4.6", features = ["derive"] }
-dirs    = { version = "6.0" }
+dirs    = { version = "7.0" }
 dotenvy = { version = "0.15" }
 
 # Async & HTTP
