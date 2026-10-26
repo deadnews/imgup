@@ -1,7 +1,9 @@
 use clap::ValueEnum;
 
-/// A pair of (image URL, optional thumbnail URL).
-pub type LinkPair = (String, Option<String>);
+pub struct Link {
+    pub image: String,
+    pub thumb: Option<String>,
+}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
 pub enum Format {
@@ -21,11 +23,11 @@ impl std::fmt::Display for Format {
     }
 }
 
-/// Join link pairs into a space-separated string in the given format.
-pub fn format_links(links: &[LinkPair], fmt: Format) -> String {
+/// Join links into a space-separated string in the given format.
+pub fn format_links(links: &[Link], fmt: Format) -> String {
     links
         .iter()
-        .map(|(img, thumb)| format_link(img, thumb.as_deref(), fmt))
+        .map(|link| format_link(&link.image, link.thumb.as_deref(), fmt))
         .collect::<Vec<_>>()
         .join(" ")
 }
@@ -46,15 +48,18 @@ fn format_link(img: &str, thumb: Option<&str>, fmt: Format) -> String {
 mod tests {
     use super::*;
 
-    fn sample_links() -> Vec<LinkPair> {
-        vec![("https://example.com/img1.png".to_owned(), None)]
+    fn sample_links() -> Vec<Link> {
+        vec![Link {
+            image: "https://example.com/img1.png".to_owned(),
+            thumb: None,
+        }]
     }
 
-    fn sample_links_with_thumb() -> Vec<LinkPair> {
-        vec![(
-            "https://example.com/img1.png".to_owned(),
-            Some("https://example.com/thumb1.jpg".to_owned()),
-        )]
+    fn sample_links_with_thumb() -> Vec<Link> {
+        vec![Link {
+            image: "https://example.com/img1.png".to_owned(),
+            thumb: Some("https://example.com/thumb1.jpg".to_owned()),
+        }]
     }
 
     #[test]
@@ -68,8 +73,14 @@ mod tests {
     #[test]
     fn test_plain_multiple() {
         let links = vec![
-            ("https://example.com/a.png".to_owned(), None),
-            ("https://example.com/b.png".to_owned(), None),
+            Link {
+                image: "https://example.com/a.png".to_owned(),
+                thumb: None,
+            },
+            Link {
+                image: "https://example.com/b.png".to_owned(),
+                thumb: None,
+            },
         ];
         assert_eq!(
             format_links(&links, Format::Plain),
@@ -127,7 +138,7 @@ mod tests {
 
     #[test]
     fn test_empty_links() {
-        let links: Vec<LinkPair> = vec![];
+        let links: Vec<Link> = vec![];
         assert_eq!(format_links(&links, Format::Plain), "");
     }
 }

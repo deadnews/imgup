@@ -16,7 +16,7 @@ use tracing::{error, info, warn};
 use tracing_subscriber::fmt;
 
 use crate::cli::Args;
-use crate::format::{Format, LinkPair, format_links};
+use crate::format::{Format, Link, format_links};
 use crate::upload::Hosting;
 
 pub(crate) const USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
@@ -62,7 +62,7 @@ async fn upload_single(
     hosting: Hosting,
     path: &Path,
     font: Option<&image::Font>,
-) -> Option<LinkPair> {
+) -> Option<Link> {
     let data = tokio::fs::read(path)
         .await
         .inspect_err(|e| error!("failed to read {}: {e}", path.display()))
@@ -91,7 +91,10 @@ async fn upload_single(
         None
     };
 
-    Some((img_url, thumb_url))
+    Some(Link {
+        image: img_url,
+        thumb: thumb_url,
+    })
 }
 
 async fn run(args: &Args) -> Result<ExitCode> {
@@ -110,7 +113,7 @@ async fn run(args: &Args) -> Result<ExitCode> {
         .await;
 
     let total = results.len();
-    let links: Vec<LinkPair> = results.into_iter().flatten().collect();
+    let links: Vec<Link> = results.into_iter().flatten().collect();
     let has_errors = links.len() < total;
 
     if !links.is_empty() {
