@@ -19,7 +19,8 @@ use crate::cli::Args;
 use crate::format::{Format, Link};
 use crate::upload::Hosting;
 
-pub(crate) const USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
+pub(crate) const USER_AGENT: &str =
+    concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
 pub(crate) const TIMEOUT: Duration = Duration::from_mins(2);
 
 #[tokio::main]
@@ -84,7 +85,9 @@ async fn upload_single(
         Some(
             upload::upload(client, hosting, td)
                 .await
-                .inspect_err(|e| error!("thumbnail upload failed for {}: {e:#}", path.display()))
+                .inspect_err(|e| {
+                    error!("thumbnail upload failed for {}: {e:#}", path.display());
+                })
                 .ok()?,
         )
     } else {

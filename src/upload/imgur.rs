@@ -21,7 +21,12 @@ struct Data {
 /// Upload image bytes to imgur.com.
 ///
 /// Uses provided client ID for authentication.
-pub async fn upload(client: &Client, data: Vec<u8>, url: &str, client_id: &str) -> Result<String> {
+pub async fn upload(
+    client: &Client,
+    data: Vec<u8>,
+    url: &str,
+    client_id: &str,
+) -> Result<String> {
     let form = Form::new().part("image", Part::bytes(data).file_name("image"));
 
     let resp = client

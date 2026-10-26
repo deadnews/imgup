@@ -51,7 +51,7 @@ fn error_body(body: &str) -> String {
 
 /// Parse a JSON response, checking status first.
 pub(crate) async fn parse_json<T: DeserializeOwned>(
-    resp: reqwest::Response,
+    resp: Response,
     provider: &str,
 ) -> Result<T> {
     let body = response_text(resp, provider).await?;

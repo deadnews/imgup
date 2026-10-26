@@ -98,7 +98,11 @@ fn extract_csrf_token(html: &str) -> Result<String> {
     bail!("csrf token not found in imgbox page")
 }
 
-async fn fetch_token(client: &Client, base_url: &str, csrf_token: &str) -> Result<TokenResponse> {
+async fn fetch_token(
+    client: &Client,
+    base_url: &str,
+    csrf_token: &str,
+) -> Result<TokenResponse> {
     let resp = client
         .post(format!("{base_url}/ajax/token/generate"))
         .header("X-CSRF-Token", csrf_token)

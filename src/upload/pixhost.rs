@@ -84,7 +84,8 @@ mod tests {
 
         Mock::given(method("GET"))
             .respond_with(
-                ResponseTemplate::new(200).set_body_string(format!(r#"<img src="{direct_url}">"#)),
+                ResponseTemplate::new(200)
+                    .set_body_string(format!(r#"<img src="{direct_url}">"#)),
             )
             .mount(&mock_server)
             .await;

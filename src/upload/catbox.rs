@@ -32,7 +32,8 @@ mod tests {
 
         Mock::given(method("POST"))
             .respond_with(
-                ResponseTemplate::new(200).set_body_string("https://files.catbox.moe/abc123.png"),
+                ResponseTemplate::new(200)
+                    .set_body_string("https://files.catbox.moe/abc123.png"),
             )
             .mount(&mock_server)
             .await;

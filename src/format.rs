@@ -38,7 +38,9 @@ fn format_link(img: &str, thumb: Option<&str>, fmt: Format) -> String {
         (Format::Bbcode, None) => format!("[img]{img}[/img]"),
         (Format::Bbcode, Some(t)) => format!("[url={img}][img]{t}[/img][/url]"),
         (Format::Html, None) => format!("<img src=\"{img}\" alt=\"image\">"),
-        (Format::Html, Some(t)) => format!("<a href=\"{img}\"><img src=\"{t}\" alt=\"thumb\"></a>"),
+        (Format::Html, Some(t)) => {
+            format!("<a href=\"{img}\"><img src=\"{t}\" alt=\"thumb\"></a>")
+        }
         (Format::Markdown, None) => format!("![image]({img})"),
         (Format::Markdown, Some(t)) => format!("[![thumb]({t})]({img})"),
     }
