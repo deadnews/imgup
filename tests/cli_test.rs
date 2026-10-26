@@ -9,10 +9,10 @@ fn test_help() {
     let output = imgup().arg("--help").output().expect("failed to run");
     assert!(output.status.success());
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("Upload images via APIs"));
-    assert!(stdout.contains("--hosting"));
-    assert!(stdout.contains("--format"));
-    assert!(stdout.contains("--thumbnail"));
+    assert!(stdout.contains("Upload images via APIs"), "{stdout}");
+    assert!(stdout.contains("--hosting"), "{stdout}");
+    assert!(stdout.contains("--format"), "{stdout}");
+    assert!(stdout.contains("--thumbnail"), "{stdout}");
 }
 
 #[test]
@@ -20,7 +20,7 @@ fn test_version() {
     let output = imgup().arg("--version").output().expect("failed to run");
     assert!(output.status.success());
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("imgup"));
+    assert!(stdout.contains("imgup"), "{stdout}");
 }
 
 #[test]
@@ -28,7 +28,7 @@ fn test_no_args_fails() {
     let output = imgup().output().expect("failed to run");
     assert!(!output.status.success());
     let stderr = String::from_utf8_lossy(&output.stderr);
-    assert!(stderr.contains("required"));
+    assert!(stderr.contains("required"), "{stderr}");
 }
 
 #[test]
@@ -48,7 +48,7 @@ fn test_missing_env_file_fails() {
         .expect("failed to run");
     assert!(!output.status.success());
     let stderr = String::from_utf8_lossy(&output.stderr);
-    assert!(stderr.contains("env file"));
+    assert!(stderr.contains("env file"), "{stderr}");
 }
 
 #[test]
@@ -59,7 +59,7 @@ fn test_invalid_hosting_rejected() {
         .expect("failed to run");
     assert!(!output.status.success());
     let stderr = String::from_utf8_lossy(&output.stderr);
-    assert!(stderr.contains("invalid"));
+    assert!(stderr.contains("invalid"), "{stderr}");
 }
 
 #[test]

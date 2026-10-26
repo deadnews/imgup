@@ -11,12 +11,12 @@ use std::time::Duration;
 use anyhow::{Context, Result};
 use clap::Parser;
 use futures::stream::{self, StreamExt};
+use reqwest::Client;
 use tracing::level_filters::LevelFilter;
 use tracing::{error, info, warn};
-use tracing_subscriber::fmt;
 
 use crate::cli::Args;
-use crate::format::{Format, Link, format_links};
+use crate::format::{Format, Link};
 use crate::upload::Hosting;
 
 pub(crate) const USER_AGENT: &str = concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
@@ -58,7 +58,7 @@ fn load_env(args: &Args) -> Result<()> {
 
 /// Upload a single image (and its thumbnail if requested).
 async fn upload_single(
-    client: &reqwest::Client,
+    client: &Client,
     hosting: Hosting,
     path: &Path,
     font: Option<&image::Font>,
@@ -98,7 +98,7 @@ async fn upload_single(
 }
 
 async fn run(args: &Args) -> Result<ExitCode> {
-    let client = reqwest::Client::builder()
+    let client = Client::builder()
         .user_agent(USER_AGENT)
         .timeout(TIMEOUT)
         .build()
@@ -124,7 +124,7 @@ async fn run(args: &Args) -> Result<ExitCode> {
             args.format
         };
 
-        let output = format_links(&links, fmt);
+        let output = format::format_links(&links, fmt);
         println!("{output}");
 
         if !args.no_clipboard {
@@ -149,7 +149,7 @@ fn init_logging(verbose: u8) {
         _ => LevelFilter::DEBUG,
     };
 
-    fmt()
+    tracing_subscriber::fmt()
         .with_max_level(filter)
         .with_target(false)
         .with_writer(std::io::stderr)

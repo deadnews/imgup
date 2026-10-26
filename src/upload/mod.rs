@@ -31,7 +31,7 @@ mod zpic;
 
 use anyhow::{Context, Result, bail, ensure};
 use clap::ValueEnum;
-use reqwest::Client;
+use reqwest::{Client, Response};
 use serde::de::DeserializeOwned;
 use tracing::debug;
 
@@ -60,7 +60,7 @@ pub(crate) async fn parse_json<T: DeserializeOwned>(
 }
 
 /// Read response text, checking status first.
-pub(crate) async fn response_text(resp: reqwest::Response, provider: &str) -> Result<String> {
+pub(crate) async fn response_text(resp: Response, provider: &str) -> Result<String> {
     let status = resp.status();
     let body = resp
         .text()

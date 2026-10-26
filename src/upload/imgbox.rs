@@ -35,7 +35,7 @@ struct UploadResponse {
 pub async fn upload(data: Vec<u8>, url: &str) -> Result<String> {
     let filename = format!("img.{}", detect_format(&data)?.extensions_str()[0]);
 
-    let client = reqwest::Client::builder()
+    let client = Client::builder()
         .user_agent(USER_AGENT)
         .cookie_store(true)
         .timeout(TIMEOUT)

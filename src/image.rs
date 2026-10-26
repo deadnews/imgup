@@ -148,8 +148,6 @@ mod tests {
         let data = create_test_png();
         let font = get_font();
         let thumb = make_thumbnail(&data, &font).unwrap();
-        assert!(!thumb.is_empty());
-
         let fmt = detect_format(&thumb).unwrap();
         assert_eq!(fmt, ImageFormat::Jpeg);
     }

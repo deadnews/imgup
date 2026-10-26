@@ -80,10 +80,10 @@ mod tests {
 
     #[test]
     fn test_get_env_missing() {
-        let result = get_env("NONEXISTENT_VAR_12345");
-        assert!(result.is_err());
-        let msg = result.expect_err("should be an error").to_string();
-        assert!(msg.contains("NONEXISTENT_VAR_12345"));
+        let msg = get_env("NONEXISTENT_VAR_12345")
+            .expect_err("should be an error")
+            .to_string();
+        assert!(msg.contains("NONEXISTENT_VAR_12345"), "{msg}");
     }
 
     #[test]
@@ -97,8 +97,8 @@ mod tests {
     fn test_config_path_structure() {
         if let Some(path) = get_config_path() {
             let path_str = path.to_string_lossy();
-            assert!(path_str.contains("imgup"));
-            assert!(path_str.ends_with(".env"));
+            assert!(path_str.contains("imgup"), "{path_str}");
+            assert!(path_str.ends_with(".env"), "{path_str}");
         }
     }
 }
