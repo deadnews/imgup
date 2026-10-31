@@ -17,6 +17,7 @@ mod imgur;
 mod kappa;
 mod lensdump;
 mod pixeldrain;
+mod pixelvault;
 mod pixhost;
 mod pixvid;
 mod postimages;
@@ -94,6 +95,7 @@ pub enum Hosting {
     Kappa,
     Lensdump,
     Pixeldrain,
+    Pixelvault,
     Pixhost,
     Pixvid,
     Postimages,
@@ -165,6 +167,10 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
             let api_secret = get_env("CLOUDINARY_API_SECRET")?;
             let url = format!("{}/{cloud_name}/image/upload", cloudinary::API_URL);
             cloudinary::upload(client, data, &url, &api_key, &api_secret).await
+        }
+        Hosting::Pixelvault => {
+            let key = std::env::var("PIXELVAULT_KEY").ok();
+            pixelvault::upload(client, data, pixelvault::API_URL, key.as_deref()).await
         }
         Hosting::Imgur => {
             let client_id = std::env::var("IMGUR_CLIENT_ID")
