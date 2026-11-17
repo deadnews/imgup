@@ -17,14 +17,14 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/rbubley/mirrors-prettier"
-rev = "331f33fa4dfbcbca7c3da3620c137fde0faab273" # frozen: v3.9.10
+rev = "c035d5c3fc2ce295b961030061d09de67d9203dc" # frozen: v3.10.1
 hooks = [
   { id = "prettier" },
 ]
 
 [[repos]]
 repo = "https://github.com/crate-ci/typos"
-rev = "7f9d0819ca1c008ade73f4b41fa9d258d48f605b" # frozen: v1.51.1
+rev = "276087d9a4f06398b3e04825487805e2d7375888" # frozen: v1.52.2
 hooks = [
   { id = "typos" },
 ]
@@ -46,7 +46,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/zizmorcore/zizmor-pre-commit"
-rev = "c92afdf2c6ca336aaa8f39e2bd8d48f62dbd8e1f" # frozen: v1.31.1
+rev = "06a39750ec31860bb44f2acf67182c40016cd1e7" # frozen: v1.32.0
 hooks = [
   { id = "zizmor", args = ["--fix=safe"] },
 ]
