@@ -8,7 +8,7 @@ use std::path::Path;
 use std::process::ExitCode;
 use std::time::Duration;
 
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, anyhow};
 use clap::Parser;
 use futures::stream::{self, StreamExt};
 use reqwest::Client;
@@ -41,7 +41,7 @@ async fn main() -> ExitCode {
 fn load_env(args: &Args) -> Result<()> {
     if let Some(path) = &args.env_file {
         return dotenvy::from_path(path)
-            .with_context(|| format!("load env file {}", path.display()));
+            .map_err(|e| anyhow!("load env file {}: {e}", path.display()));
     }
 
     if let Some(path) = util::get_config_path().filter(|p| p.exists())

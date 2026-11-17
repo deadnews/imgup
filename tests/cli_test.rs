@@ -49,6 +49,7 @@ fn test_missing_env_file_fails() {
     assert!(!output.status.success());
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(stderr.contains("load env file"), "{stderr}");
+    assert_eq!(stderr.matches("os error").count(), 1, "{stderr}");
 }
 
 #[test]
