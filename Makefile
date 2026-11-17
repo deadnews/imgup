@@ -23,6 +23,8 @@ up:
 up-ci:
 	prek update
 	pinact run --update
+up-rust:
+	v=$$(gh release view -R rust-lang/rust --json tagName -q '.tagName | split(".")[:2] | join(".")') && sed -i "s/^channel .*/channel    = \"$$v\"/" rust-toolchain.toml
 
 build:
 	cargo build
