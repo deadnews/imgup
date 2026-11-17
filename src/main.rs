@@ -46,7 +46,7 @@ async fn main() -> ExitCode {
 fn load_env(args: &Args) -> Result<()> {
     if let Some(path) = &args.env_file {
         return dotenvy::from_path(path)
-            .with_context(|| format!("failed to load env file {}", path.display()));
+            .with_context(|| format!("load env file {}", path.display()));
     }
 
     if let Some(path) = util::get_config_path().filter(|p| p.exists())
@@ -105,7 +105,7 @@ async fn run(args: &Args) -> Result<ExitCode> {
         .user_agent(USER_AGENT)
         .timeout(TIMEOUT)
         .build()
-        .context("failed to build HTTP client")?;
+        .context("build HTTP client")?;
 
     let font = args.thumbnail.then(image::get_font);
 

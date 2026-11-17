@@ -56,7 +56,7 @@ pub(crate) async fn parse_json<T: DeserializeOwned>(
 ) -> Result<T> {
     let body = response_text(resp, provider).await?;
     serde_json::from_str(&body)
-        .with_context(|| format!("failed to parse {provider} response: {}", error_body(&body)))
+        .with_context(|| format!("parse {provider} response: {}", error_body(&body)))
 }
 
 /// Read response text, checking status first.
@@ -65,7 +65,7 @@ pub(crate) async fn response_text(resp: Response, provider: &str) -> Result<Stri
     let body = resp
         .text()
         .await
-        .with_context(|| format!("failed to read {provider} response"))?;
+        .with_context(|| format!("read {provider} response"))?;
 
     if !status.is_success() {
         bail!("{provider} returned {status}: {}", error_body(&body));

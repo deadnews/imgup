@@ -39,7 +39,7 @@ async fn extract_direct_link(client: &Client, show_url: &str) -> Result<String> 
         .await?
         .text()
         .await
-        .context("failed to read pixhost show page")?;
+        .context("read pixhost show page")?;
 
     // Extract path after /show/ to match against direct image URLs
     let show_path = show_url

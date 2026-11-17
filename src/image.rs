@@ -19,7 +19,7 @@ pub struct Font(FdFont);
 
 /// Detect image format from raw bytes.
 pub fn detect_format(data: &[u8]) -> Result<ImageFormat> {
-    image::guess_format(data).context("unable to detect image format")
+    image::guess_format(data).context("detect image format")
 }
 
 /// Load the embedded font.
@@ -33,7 +33,7 @@ pub fn get_font() -> Font {
 /// Generate a JPEG thumbnail with a text caption showing dimensions, format, and file size.
 pub fn make_thumbnail(data: &[u8], font: &Font) -> Result<Vec<u8>> {
     let format = detect_format(data)?;
-    let img = image::load_from_memory(data).context("failed to decode image")?;
+    let img = image::load_from_memory(data).context("decode image")?;
     let (orig_w, orig_h) = (img.width(), img.height());
 
     let resized = img.resize(THUMBNAIL_SIZE, THUMBNAIL_SIZE, FilterType::Lanczos3);
@@ -54,7 +54,7 @@ pub fn make_thumbnail(data: &[u8], font: &Font) -> Result<Vec<u8>> {
     let encoder = JpegEncoder::new_with_quality(&mut buf, JPEG_QUALITY);
     DynamicImage::ImageRgb8(canvas)
         .write_with_encoder(encoder)
-        .context("failed to encode thumbnail")?;
+        .context("encode thumbnail")?;
 
     Ok(buf.into_inner())
 }

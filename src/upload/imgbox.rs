@@ -40,7 +40,7 @@ pub async fn upload(data: Vec<u8>, url: &str) -> Result<String> {
         .cookie_store(true)
         .timeout(TIMEOUT)
         .build()
-        .context("failed to build imgbox client")?;
+        .context("build imgbox client")?;
 
     let csrf_token = fetch_csrf(&client, url).await?;
     let token = fetch_token(&client, url, &csrf_token).await?;

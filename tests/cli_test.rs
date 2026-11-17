@@ -48,7 +48,7 @@ fn test_missing_env_file_fails() {
         .expect("failed to run");
     assert!(!output.status.success());
     let stderr = String::from_utf8_lossy(&output.stderr);
-    assert!(stderr.contains("env file"), "{stderr}");
+    assert!(stderr.contains("load env file"), "{stderr}");
 }
 
 #[test]
