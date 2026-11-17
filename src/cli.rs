@@ -20,7 +20,7 @@ pub struct Args {
     pub hosting: Hosting,
 
     /// Output format for the links.
-    #[arg(short, long, default_value_t = Format::Plain)]
+    #[arg(short, long, value_enum, default_value_t = Format::Plain)]
     pub format: Format,
 
     /// Create captioned thumbnails.

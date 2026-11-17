@@ -13,16 +13,6 @@ pub enum Format {
     Markdown,
 }
 
-impl std::fmt::Display for Format {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(
-            self.to_possible_value()
-                .expect("all variants have values")
-                .get_name(),
-        )
-    }
-}
-
 /// Join links into a space-separated string in the given format.
 pub fn format_links(links: &[Link], fmt: Format) -> String {
     links
