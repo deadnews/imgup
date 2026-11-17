@@ -4,7 +4,7 @@ use anyhow::{Context, Result};
 use fontdue::Font as FdFont;
 use image::codecs::jpeg::JpegEncoder;
 use image::imageops::FilterType;
-use image::{DynamicImage, ImageFormat, Rgb, RgbImage};
+use image::{DynamicImage, ImageFormat, Rgb, RgbImage, Rgba, RgbaImage};
 
 use crate::util::human_size;
 
@@ -37,11 +37,11 @@ pub fn make_thumbnail(data: &[u8], font: &Font) -> Result<Vec<u8>> {
     let (orig_w, orig_h) = (img.width(), img.height());
 
     let resized = img.resize(THUMBNAIL_SIZE, THUMBNAIL_SIZE, FilterType::Lanczos3);
-    let rgb = resized.to_rgb8();
 
-    let (w, h) = (rgb.width(), rgb.height());
-    let mut canvas = RgbImage::from_pixel(w, h + CAPTION_HEIGHT, Rgb([255, 255, 255]));
-    image::imageops::overlay(&mut canvas, &rgb, 0, 0);
+    let (w, h) = (resized.width(), resized.height());
+    let mut canvas = RgbaImage::from_pixel(w, h + CAPTION_HEIGHT, Rgba([255; 4]));
+    image::imageops::overlay(&mut canvas, &resized.to_rgba8(), 0, 0);
+    let mut canvas = DynamicImage::ImageRgba8(canvas).into_rgb8();
 
     let caption = format!(
         "{orig_w}x{orig_h} ({}) [{}]",
@@ -150,6 +150,19 @@ mod tests {
         let thumb = make_thumbnail(&data, &font).unwrap();
         let fmt = detect_format(&thumb).unwrap();
         assert_eq!(fmt, ImageFormat::Jpeg);
+    }
+
+    #[test]
+    fn test_make_thumbnail_transparent_on_white() {
+        let img = RgbaImage::from_pixel(100, 100, Rgba([0, 0, 0, 0]));
+        let mut buf = Cursor::new(Vec::new());
+        DynamicImage::ImageRgba8(img)
+            .write_to(&mut buf, ImageFormat::Png)
+            .unwrap();
+
+        let thumb = make_thumbnail(&buf.into_inner(), &get_font()).unwrap();
+        let pixel = image::load_from_memory(&thumb).unwrap().to_rgb8()[(50, 50)];
+        assert!(pixel.0.iter().all(|&c| c > 250), "{pixel:?}");
     }
 
     #[test]
