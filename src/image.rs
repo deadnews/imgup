@@ -33,7 +33,7 @@ pub fn get_font() -> Font {
 /// Generate a JPEG thumbnail with a text caption showing dimensions, format, and file size.
 pub fn make_thumbnail(data: &[u8], font: &Font) -> Result<Vec<u8>> {
     let format = detect_format(data)?;
-    let img = image::load_from_memory(data).context("decode image")?;
+    let img = image::load_from_memory_with_format(data, format).context("decode image")?;
     let (orig_w, orig_h) = (img.width(), img.height());
 
     let resized = img.resize(THUMBNAIL_SIZE, THUMBNAIL_SIZE, FilterType::Lanczos3);
