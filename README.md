@@ -36,6 +36,7 @@ yay -S imgup-bin
 | [pixhost](https://pixhost.to/)        |  -  | `https://img75.pixhost.to/images/69/{id}_img.png`          |
 | [sxcu](https://sxcu.net/)             |  -  | `https://sxcu.net/{id}.png`                                |
 | [imgur](https://imgur.com/)           |  ±  | `https://i.imgur.com/{id}.png`                             |
+| [pixelvault](https://pixelvault.dev/) |  ±  | `https://img.pixelvault.dev/{project}/{id}.png`            |
 | [cloudinary](https://cloudinary.com/) |  +  | `https://res.cloudinary.com/{cloud}/image/upload/{id}.png` |
 | [filepost](https://filepost.dev/)     |  +  | `https://cdn.filepost.dev/file/.../{id}.png`               |
 | [freeimage](https://freeimage.host/)  |  +  | `https://iili.io/{id}.png`                                 |
@@ -99,6 +100,7 @@ IMGLINK_KEY=
 IMGUR_CLIENT_ID= # optional
 LENSDUMP_KEY=
 PIXELDRAIN_KEY=
+PIXELVAULT_KEY= # optional
 PIXVID_KEY=
 POSTIMAGES_KEY=
 REDACTED_API_KEY=
