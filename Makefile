@@ -7,10 +7,10 @@ pc:
 	prek run -a
 lint:
 	cargo fmt --all
-	cargo clippy --fix --allow-dirty --all-targets -- -D warnings
+	CARGO_BUILD_WARNINGS=deny cargo clippy --all-targets --allow-dirty --fix
 lint-ci:
 	cargo fmt --all --check
-	cargo clippy --all-targets -- -D warnings
+	CARGO_BUILD_WARNINGS=deny cargo clippy --all-targets
 test:
 	cargo llvm-cov nextest
 test-ci: test
