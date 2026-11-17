@@ -28,11 +28,6 @@ async fn main() -> ExitCode {
     let args = Args::parse();
     init_logging(args.verbose);
 
-    if let Err(e) = load_env(&args) {
-        error!("{e:#}");
-        return ExitCode::FAILURE;
-    }
-
     match run(&args).await {
         Ok(code) => code,
         Err(e) => {
@@ -101,6 +96,8 @@ async fn upload_single(
 }
 
 async fn run(args: &Args) -> Result<ExitCode> {
+    load_env(args)?;
+
     let client = Client::builder()
         .user_agent(USER_AGENT)
         .timeout(TIMEOUT)
