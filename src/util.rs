@@ -11,9 +11,7 @@ pub fn get_config_path() -> Option<PathBuf> {
 /// Get a required environment variable, with a helpful error message.
 pub fn get_env(name: &str) -> Result<String> {
     std::env::var(name).with_context(|| {
-        let hint = get_config_path()
-            .map(|p| format!(" or in '{}'", p.display()))
-            .unwrap_or_default();
+        let hint = get_config_path().map_or_default(|p| format!(" or in '{}'", p.display()));
         format!("please set {name} in environment variables{hint}")
     })
 }
