@@ -24,11 +24,14 @@ struct Data {
 pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Result<String> {
     let ext = detect_format(&data)?.extensions_str()[0];
 
-    let form = Form::new()
-        .text("api_key", key.to_owned())
-        .part("file", Part::bytes(data).file_name(format!("img.{ext}")));
+    let form = Form::new().part("file", Part::bytes(data).file_name(format!("img.{ext}")));
 
-    let resp = client.post(url).multipart(form).send().await?;
+    let resp = client
+        .post(url)
+        .header("X-API-Key", key)
+        .multipart(form)
+        .send()
+        .await?;
 
     let resp: Response = parse_json(resp, "imghippo").await?;
     Ok(resp.data.url)
@@ -36,7 +39,7 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
 
 #[cfg(test)]
 mod tests {
-    use wiremock::matchers::method;
+    use wiremock::matchers::{header, method};
     use wiremock::{Mock, MockServer, ResponseTemplate};
 
     use super::*;
@@ -46,6 +49,7 @@ mod tests {
         let mock_server = MockServer::start().await;
 
         Mock::given(method("POST"))
+            .and(header("X-API-Key", "test_key"))
             .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
                 "success": true,
                 "status": 200,
