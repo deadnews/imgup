@@ -46,7 +46,6 @@ yay -S imgup-bin
 | [imgchest](https://imgchest.com/)     |  +  | `https://cdn.imgchest.com/files/{id}.png`                  |
 | [imghippo](https://imghippo.com/)     |  +  | `https://i.imghippo.com/files/{id}.png`                    |
 | [imglink](https://imglink.cc/)        |  +  | `https://imglink.cc/cdn/{id}.png`                          |
-| [lensdump](https://lensdump.com/)     |  +  | `https://i.lensdump.com/i/{id}.png`                        |
 | [pixeldrain](https://pixeldrain.com/) |  +  | `https://pixeldrain.com/api/file/{id}`                     |
 | [pixvid](https://pixvid.org/)         |  +  | `https://pixvid.org/images/2022/07/30/{id}.png`            |
 | [postimages](https://postimages.org/) |  +  | `https://i.postimg.cc/{id}/img.png`                        |
@@ -97,7 +96,6 @@ IMGHIPPO_KEY=
 IMGCHEST_KEY=
 IMGLINK_KEY=
 IMGUR_CLIENT_ID= # optional
-LENSDUMP_KEY=
 PIXELDRAIN_KEY=
 PIXVID_KEY=
 POSTIMAGES_KEY=

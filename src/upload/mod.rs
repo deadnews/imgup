@@ -15,7 +15,6 @@ mod imgchest;
 mod imghippo;
 mod imglink;
 mod imgur;
-mod lensdump;
 mod pixeldrain;
 mod pixhost;
 mod pixvid;
@@ -92,7 +91,6 @@ pub enum Hosting {
     Imghippo,
     Imglink,
     Imgur,
-    Lensdump,
     Pixeldrain,
     Pixhost,
     Pixvid,
@@ -147,7 +145,6 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
         Hosting::Imgchest => keyed!(imgchest, "IMGCHEST_KEY"),
         Hosting::Imghippo => keyed!(imghippo, "IMGHIPPO_KEY"),
         Hosting::Imglink => keyed!(imglink, "IMGLINK_KEY"),
-        Hosting::Lensdump => keyed!(lensdump, "LENSDUMP_KEY"),
         Hosting::Pixeldrain => keyed!(pixeldrain, "PIXELDRAIN_KEY"),
         Hosting::Pixvid => keyed!(pixvid, "PIXVID_KEY"),
         Hosting::Postimages => keyed!(postimages, "POSTIMAGES_KEY"),
