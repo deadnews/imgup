@@ -27,6 +27,7 @@ yay -S imgup-bin
 
 | host                                  | key | return example                                             |
 | :------------------------------------ | :-: | :--------------------------------------------------------- |
+| [basepic](https://basepic.com/)       |  -  | `https://basepic.com/{id}/image.png`                       |
 | [beeimg](https://beeimg.com/)         |  -  | `https://beeimg.com/images/{id}.png`                       |
 | [catbox](https://catbox.moe/)         |  -  | `https://files.catbox.moe/{id}`                            |
 | [fastpic](https://fastpic.org/)       |  -  | `https://i120.fastpic.org/big/2022/0730/d9/{id}.png`       |

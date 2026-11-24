@@ -1,3 +1,4 @@
+mod basepic;
 mod beeimg;
 mod catbox;
 mod cloudinary;
@@ -75,6 +76,7 @@ pub(crate) async fn response_text(resp: Response, provider: &str) -> Result<Stri
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
 pub enum Hosting {
+    Basepic,
     Beeimg,
     Catbox,
     Cloudinary,
@@ -131,6 +133,7 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
     }
 
     let url = match hosting {
+        Hosting::Basepic => anon!(basepic),
         Hosting::Beeimg => anon!(beeimg),
         Hosting::Catbox => anon!(catbox),
         Hosting::Fastpic => anon!(fastpic),
