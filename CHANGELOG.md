@@ -1,5 +1,58 @@
 # Changelog
 
+## [4.2.0](https://github.com/deadnews/imgup/compare/v4.1.0...v4.2.0) - 2026-11-24
+
+### Features
+
+- _(hostings)_ drop `lensdump`, its api is paid-only now - ([347ac87](https://github.com/deadnews/imgup/commit/347ac877eab157bb0bc5a880d96f37c49ce8aa3a))
+- _(hostings)_ drop `kappa`, its domain is suspended - ([b12bcd8](https://github.com/deadnews/imgup/commit/b12bcd89cc35777099de2c685a217abba4805931))
+- _(hostings)_ add `basepic` - ([3e6062e](https://github.com/deadnews/imgup/commit/3e6062e58aca9c6b3e404e57e5767d2d21acdb0c))
+
+### Bug fixes
+
+- _(beeimg)_ drop the doubled `https:` prefix - ([2dd0331](https://github.com/deadnews/imgup/commit/2dd0331f06d8624f106ed633debe7b52c48df883))
+- _(image)_ blend transparent images onto the white thumbnail canvas - ([baed103](https://github.com/deadnews/imgup/commit/baed10367db6f70ea0c122e5d2944184f7572b3c))
+- _(imghippo)_ send the key in the `X-API-Key` header - ([ee1ca26](https://github.com/deadnews/imgup/commit/ee1ca262f7d3e44d09a05b802488be09cad29631))
+- print the env file error cause once - ([bf452ac](https://github.com/deadnews/imgup/commit/bf452ac3149a543b3b724250159b307f6f00419d))
+
+### Refactor
+
+- _(format)_ drop `Display` in favor of `value_enum` default - ([0be4ab0](https://github.com/deadnews/imgup/commit/0be4ab04b920b0c2518eea395d5f84f8de5f79af))
+- _(format)_ replace `LinkPair` tuple with `Link` struct - ([5c2323f](https://github.com/deadnews/imgup/commit/5c2323febf42aca1e572d8dde1b01efa38f433b6))
+- _(image)_ decode thumbnails with the detected format - ([8c08888](https://github.com/deadnews/imgup/commit/8c0888899344176474b7e13ccf5d50cfe5b88887))
+- _(imgbox)_ name the upload `img.<ext>` like other hostings - ([a3bcdcd](https://github.com/deadnews/imgup/commit/a3bcdcd58aa21ce512d9ef1a6eb990796af7a4ac))
+- _(upload)_ drop redundant `context` on send errors - ([37d301e](https://github.com/deadnews/imgup/commit/37d301e0b9b9d2129bc2eb665267971b4ecfb34e))
+- _(upload)_ collapse `ext`/`ext_str` into one binding - ([0566bcb](https://github.com/deadnews/imgup/commit/0566bcbf788ef4d8ce5173906bb9a22656230638))
+- annotate inferred types and unify `postimages` parsing - ([032930e](https://github.com/deadnews/imgup/commit/032930e665279b64d63b3c365dbbc12770590a80))
+- load env inside `run` - ([fea99b2](https://github.com/deadnews/imgup/commit/fea99b2e7149ed142b55f43d2b91471d7bc860b1))
+- drop failure framing from error contexts - ([8844db4](https://github.com/deadnews/imgup/commit/8844db4078097a5b0c4fb01f98e378ca16ac0c4e))
+- import types instead of full paths - ([177fb68](https://github.com/deadnews/imgup/commit/177fb68af5f30d704c2640698429c753ec2f7079))
+
+### Build
+
+- pin rust toolchain to `1.100` - ([91fb282](https://github.com/deadnews/imgup/commit/91fb282f93b6e662f7d3016e75f6ed0491f9cd53))
+
+### Testing
+
+- cover hostings in the `Makefile.test.mk` - ([9fb2964](https://github.com/deadnews/imgup/commit/9fb29643a0fbf7407d21f0bd3d148eff33af7741))
+
+### Styling
+
+- _(util)_ use `map_or_default` - ([fba624e](https://github.com/deadnews/imgup/commit/fba624eacd9091ea49447dddacd8da215cee3f21))
+- wrap code at 95 columns - ([bfb31f2](https://github.com/deadnews/imgup/commit/bfb31f2d4fdc536a64e36620c1da42ea507e1287))
+
+### Chores
+
+- _(make)_ deny cargo warnings in lint - ([afe6d19](https://github.com/deadnews/imgup/commit/afe6d19791429b11eb8851a53cb7a56821a3bdac))
+- _(make)_ default `tag` to bumped version - ([4ad8b13](https://github.com/deadnews/imgup/commit/4ad8b1399c801b7cd2e26a793b2fbcad697cb4e9))
+- _(makefile)_ add `alpha` target for pre-release tags - ([54fab0d](https://github.com/deadnews/imgup/commit/54fab0dcfb3e9dbb5cb6a655f7a977994adf7593))
+- _(prek)_ migrate to toml - ([3cde5db](https://github.com/deadnews/imgup/commit/3cde5db6fa21efc11f2cfc507e6c7117180cdec5))
+- move `unwrap_used` test exemption to `clippy.toml` - ([e1fd540](https://github.com/deadnews/imgup/commit/e1fd54088f25d8dd9fa2362d5413ca3550e62a0f))
+
+### Dependencies
+
+- update deps - ([2b20757](https://github.com/deadnews/imgup/commit/2b20757ae6a24de96971509b9a6d6fe3abe8ee8a))
+
 ## [4.1.0](https://github.com/deadnews/imgup/compare/v4.0.3...v4.1.0) - 2026-07-13
 
 ### Features
