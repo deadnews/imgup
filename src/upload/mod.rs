@@ -15,7 +15,6 @@ mod imgchest;
 mod imghippo;
 mod imglink;
 mod imgur;
-mod kappa;
 mod lensdump;
 mod pixeldrain;
 mod pixhost;
@@ -93,7 +92,6 @@ pub enum Hosting {
     Imghippo,
     Imglink,
     Imgur,
-    Kappa,
     Lensdump,
     Pixeldrain,
     Pixhost,
@@ -138,7 +136,6 @@ pub async fn upload(client: &Client, hosting: Hosting, data: Vec<u8>) -> Result<
         Hosting::Catbox => anon!(catbox),
         Hosting::Fastpic => anon!(fastpic),
         Hosting::Gofile => anon!(gofile),
-        Hosting::Kappa => anon!(kappa),
         Hosting::Pixhost => anon!(pixhost),
         Hosting::Sxcu => anon!(sxcu),
         Hosting::Filepost => keyed!(filepost, "FILEPOST_KEY"),

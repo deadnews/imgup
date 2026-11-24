@@ -33,7 +33,6 @@ yay -S imgup-bin
 | [fastpic](https://fastpic.org/)       |  -  | `https://i120.fastpic.org/big/2022/0730/d9/{id}.png`       |
 | [gofile](https://gofile.io/)          |  -  | `https://gofile.io/d/{id}`                                 |
 | [imgbox](https://imgbox.com/)         |  -  | `https://images2.imgbox.com/52/8c/{id}_o.png`              |
-| [kappa](https://kappa.lol/)           |  -  | `https://kappa.lol/{id}.png`                               |
 | [pixhost](https://pixhost.to/)        |  -  | `https://img75.pixhost.to/images/69/{id}_img.png`          |
 | [sxcu](https://sxcu.net/)             |  -  | `https://sxcu.net/{id}.png`                                |
 | [imgur](https://imgur.com/)           |  ±  | `https://i.imgur.com/{id}.png`                             |
