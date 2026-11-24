@@ -46,7 +46,7 @@ hooks = [
 
 [[repos]]
 repo = "https://github.com/zizmorcore/zizmor-pre-commit"
-rev = "06a39750ec31860bb44f2acf67182c40016cd1e7" # frozen: v1.32.0
+rev = "c7d31dc612dffdd4d3b2f2b88b9660d3ab057ee8" # frozen: v1.33.1
 hooks = [
   { id = "zizmor", args = ["--fix=safe"] },
 ]
