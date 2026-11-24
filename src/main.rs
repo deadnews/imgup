@@ -106,7 +106,7 @@ async fn run(args: &Args) -> Result<ExitCode> {
 
     let font = args.thumbnail.then(image::get_font);
 
-    let results: Vec<_> = stream::iter(&args.images)
+    let results: Vec<Option<Link>> = stream::iter(&args.images)
         .map(|path| upload_single(&client, args.hosting, path, font.as_ref()))
         .buffered(args.jobs.get())
         .collect()

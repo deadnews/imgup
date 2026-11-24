@@ -183,19 +183,20 @@ mod tests {
     #[test]
     fn test_harness_lists_every_hosting() {
         let mk = include_str!("../../Makefile.test.mk");
-        let listed: BTreeSet<&str> = mk
+        let listed: BTreeSet<String> = mk
             .lines()
             .find_map(|l| l.strip_prefix("HOSTINGS :="))
             .expect("HOSTINGS line")
             .split_whitespace()
+            .map(str::to_owned)
             .collect();
 
-        let all: Vec<String> = Hosting::value_variants()
+        let all: BTreeSet<String> = Hosting::value_variants()
             .iter()
             .map(ToString::to_string)
             .collect();
 
-        assert_eq!(listed, all.iter().map(String::as_str).collect());
+        assert_eq!(listed, all);
     }
 
     #[test]

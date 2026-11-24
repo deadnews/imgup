@@ -1,4 +1,4 @@
-use anyhow::{Result, anyhow};
+use anyhow::{Result, bail};
 use base64::Engine as _;
 use reqwest::Client;
 use tracing::debug;
@@ -33,14 +33,14 @@ pub async fn upload(client: &Client, data: Vec<u8>, url: &str, key: &str) -> Res
 
 /// Extract the direct image URL from the XML response.
 fn extract_hotlink(xml: &str) -> Result<String> {
-    xml.split_once("<hotlink>")
-        .and_then(|(_, rest)| rest.split_once("</hotlink>"))
-        .map(|(url, _)| url.to_owned())
-        .inspect(|url| debug!("postimages hotlink: {url}"))
-        .ok_or_else(|| {
-            debug!("Response text:\n{xml}");
-            anyhow!("hotlink not found in postimages response")
-        })
+    if let Some((_, rest)) = xml.split_once("<hotlink>")
+        && let Some((url, _)) = rest.split_once("</hotlink>")
+    {
+        debug!("postimages hotlink: {url}");
+        return Ok(url.to_owned());
+    }
+    debug!("Response text:\n{xml}");
+    bail!("hotlink not found in postimages response")
 }
 
 #[cfg(test)]
